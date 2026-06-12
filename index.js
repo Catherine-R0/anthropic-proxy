@@ -212,6 +212,37 @@ async function sendEmail(to, name, htmlContent, lang) {
   return response.json();
 }
 
+// Create Stripe checkout session with customer data
+app.post('/create-checkout', async (req, res) => {
+  try {
+    const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+    const { name, date, lang } = req.body;
+    
+    const session = await stripe.checkout.sessions.create({
+      payment_method_types: ['card'],
+      line_items: [{
+        price_data: {
+          currency: 'eur',
+          product_data: { name: 'Cosmic Reading — Full PDF' },
+          unit_amount: 900,
+        },
+        quantity: 1,
+      }],
+      mode: 'payment',
+      success_url: 'https://cosmic-reading.netlify.app?success=true',
+      cancel_url: 'https://cosmic-reading.netlify.app',
+      customer_email: undefined,
+      metadata: { name: name || '', date: date || '', lang: lang || 'en' },
+      phone_number_collection: { enabled: false },
+    });
+    
+    res.json({ url: session.url });
+  } catch (err) {
+    console.error('Checkout error:', err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
 // Stripe webhook
 app.post("/webhook", async (req, res) => {
   const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
