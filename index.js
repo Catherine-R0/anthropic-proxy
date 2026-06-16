@@ -570,7 +570,7 @@ Asmeninis, šiltas tonas. Mažiausiai 200 žodžių kiekvienam skyriui. Kreipkit
     },
     body: JSON.stringify({
       model: "claude-sonnet-4-6",
-      max_tokens: 12000,
+      max_tokens: 16000,
       messages: [{ role: "user", content: prompt }],
     }),
   });
@@ -578,7 +578,11 @@ Asmeninis, šiltas tonas. Mažiausiai 200 žodžių kiekvienam skyriui. Kreipkit
   const data = await response.json();
   if (!data.content || !data.content[0]) throw new Error(JSON.stringify(data));
 
-  const claudeContent = data.content[0].text;
+  // Strip markdown code fences that Claude sometimes wraps HTML output in
+  const claudeContent = data.content[0].text
+    .replace(/^```(?:html)?\s*\n?/i, "")
+    .replace(/\n?```\s*$/i, "")
+    .trim();
 
   // Assemble final report:
   // [Methodology note] + Portrait + [Calculations] + Zodiac + ... + Conclusion + [Short disclaimer]
