@@ -564,11 +564,7 @@ Asmeninis, šiltas tonas. Mažiausiai 200 žodžių kiekvienam skyriui. Kreipkit
   const claudeContent = data.content[0].text;
 
   // Assemble final report: Portrait + Calculations + Rest + Disclaimer
-  // The calculations section is pre-generated and inserted after the first <h2> block
-  const calcInsertMarker = isRu
-    ? new RegExp(`(<h2>[^<]*${secs.zodiac.replace("✦ ","").replace(/[.*+?^${}()|[\]\\]/g,"\\$&")}`, "i")
-    : new RegExp(`(<h2>[^<]*${secs.zodiac.replace("✦ ","").replace(/[.*+?^${}()|[\]\\]/g,"\\$&")}`, "i");
-
+  // Calculations section (pre-generated) is inserted before the Sun Sign section
   let finalHTML;
   const matchIdx = claudeContent.search(/<h2>[^<]*(?:Sun Sign|Знак Солнца|Päikesemärk|Aurinkomerkki|Saules zīme|Zodiako ženklas|Zodiaka zīme)/i);
   if (matchIdx > 0) {
