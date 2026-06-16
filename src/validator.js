@@ -74,10 +74,13 @@ const REQUIRED_SECTION_PATTERNS_FALLBACK = [
 const METHODOLOGY_NOTE_REQUIRED_TERMS = [
   { pattern: /Big Five/i,                                                   description: "Big Five (behavioral model)" },
   { pattern: /\bDISC\b/,                                                    description: "DISC (communication model)" },
-  { pattern: /Matrix of Destiny|Матрица Судьбы|Matrix of Destiny/i,        description: "Matrix of Destiny (symbolic system)" },
-  { pattern: /numerolog|нумерологи/i,                                        description: "numerology" },
+  { pattern: /Matrix of Destiny|Матрица Судьбы/i,                          description: "Matrix of Destiny (symbolic system)" },
+  // "numerolo" matches all forms: numerology, numeroloogia, numerologia, numerologiją, numeroloģiju
+  { pattern: /numerolo|нумерологи/i,                                        description: "numerology" },
+  // zodiac in all languages
   { pattern: /zodiac|знак зодиака|sodiaag|horoskooppi|zodiaka|zodiako/i,   description: "zodiac sign" },
-  { pattern: /birth year|год рождения|sünniaasta|syntymävuosi|dzimšanas gads|gimimo metai/i, description: "birth year" },
+  // birth year: use root words that cover all inflected forms
+  { pattern: /birth year|год рождения|sünniaasta|syntymävuosi|dzimšanas|gimimo/i, description: "birth year" },
 ];
 
 // Short disclaimer must be present near the end
