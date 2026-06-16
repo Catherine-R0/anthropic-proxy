@@ -226,10 +226,26 @@ function renderCalcSection(steps, loc, name) {
 </div>`;
 }
 
+function renderMethodologyNote(loc) {
+  const title = loc.methodologyNoteTitle || "About This Report";
+  const body  = (loc.methodologyNoteBody || loc.disclaimer || "")
+    .split("\n\n")
+    .map(para => `<p class="methodology-text">${para.trim()}</p>`)
+    .join("\n  ");
+  return `
+<div class="methodology-block">
+  <h2 class="methodology-title">${title}</h2>
+  ${body}
+</div>`;
+}
+
 function renderDisclaimerSection(loc) {
+  const title = loc.shortDisclaimerTitle || "A Brief Note";
+  const body  = loc.shortDisclaimerBody  || loc.disclaimer || "";
   return `
 <div class="disclaimer-block">
-  <p class="disclaimer-text">${loc.disclaimer}</p>
+  <h3 class="disclaimer-title">${title}</h3>
+  <p class="disclaimer-text">${body}</p>
 </div>`;
 }
 
@@ -294,8 +310,9 @@ async function generateFullReading(name, date, lang) {
   const pyTheme   = (PY_THEMES[lang] || PY_THEMES.en)[personalYear] || "";
 
   // Pre-generated sections
-  const calcHTML       = renderCalcSection(steps, loc, name);
-  const disclaimerHTML = renderDisclaimerSection(loc);
+  const methodologyNoteHTML = renderMethodologyNote(loc);
+  const calcHTML            = renderCalcSection(steps, loc, name);
+  const disclaimerHTML      = renderDisclaimerSection(loc);
 
   // Behavioral and symbolic context blocks (internal only, cleaned)
   const behavioralBlock = buildBehavioralBlock(lang);
@@ -311,25 +328,21 @@ async function generateFullReading(name, date, lang) {
   const forbiddenReminder = isRu
     ? `
 ═══ КРИТИЧЕСКИЕ ПРАВИЛА ДЛЯ ВЫВОДА ═══
-НЕ используй в тексте отчёта:
-• Названия систем: "Big Five", "Matrix of Destiny", "Матрица Судьбы", "BFI-2"
-• Технические коды: EXT-, AGR-, CON-, NEG-, OPE-, любые аббревиатуры моделей
+НЕ используй в тексте отчёта (в разделах ниже):
+• Технические коды: EXT-, AGR-, CON-, NEG-, OPE-, BFI-2, любые аббревиатуры моделей
 • Внутренние ссылки: "база знаний", "по инструкции", "Блок 1", "Блок 2", "ориентир гласит"
-• Категоричные заявления: "ваша судьба", "это доказывает", "вы всегда", "вы никогда", "гарантирует"
-• Медицинские термины: "диагноз", "симптом", "лечение"
+• Категоричные заявления: "ваша судьба", "это доказывает", "вы всегда", "вы никогда", "гарантирует", "предсказывает"
 Используй:
-• "поведенческие паттерны", "тенденции в общении", "эмоциональные реакции" — вместо Big Five
+• "поведенческие паттерны", "тенденции в общении", "эмоциональные реакции" — вместо названий моделей
 • "символический слой для саморефлексии" — для архетипов
 • "может", "нередко", "склонн(-а)", "возможно" — вместо категоричного "есть", "будет"
 `
     : `
 ═══ CRITICAL OUTPUT RULES ═══
-Do NOT use in the report text:
-• System names: "Big Five", "Matrix of Destiny", "BFI-2", "DISC"
-• Technical codes: EXT-, AGR-, CON-, NEG-, OPE-, any model abbreviations
+Do NOT use in the report sections below:
+• Technical codes: EXT-, AGR-, CON-, NEG-, OPE-, BFI-2, any model abbreviations
 • Internal references: "knowledge base", "per the guide", "Block 1", "Block 2"
-• Absolute claims: "your destiny", "this proves", "you always", "you never", "guarantees"
-• Medical terms: "diagnosis", "symptom", "treatment"
+• Absolute claims: "your destiny", "this proves", "you always", "you never", "guarantees", "predicts"
 Use instead:
 • "behavioral patterns", "communication tendencies", "emotional responses"
 • "symbolic layer for self-reflection" for archetypes
@@ -387,23 +400,25 @@ ${loc.birthYearIntro}
 <h2>${secs.relationships}</h2>
 Используй символический контекст числа ${nums.lifePath} (отношения). Что ${name} может искать в отношениях, как может проявляться, что может быть источником трений. Тёплый, рефлексивный тон.
 
-<h2>${secs.recommendations}</h2>
-5–6 конкретных, действенных рекомендаций — список (<ul><li>). Каждая связана с одним из чисел или с сочетанием. Практично, применимо в жизни.
-
-<h2>${secs.journalPrompts}</h2>
-6–7 открытых вопросов для дневника — список. Сочетай вопросы, связанные с числами, с вопросами из символического контекста. Вопросы должны открывать пространство для размышления.
-
-<h2>${secs.forecast}</h2>
-Личный год ${personalYear} (${pyTheme}): ключевые темы, окна возможностей, зоны роста. Как знак ${zodiacDisplay} взаимодействует с темой личного года? Конкретные акценты по кварталам 2026 года. Не предсказания — приглашение к намеренным действиям.
-
 <h2>${secs.integratedProfile}</h2>
 ${loc.integratedProfileIntro}
 СИНТЕЗ: Как число ${nums.lifePath} (жизненный путь) взаимодействует с числом ${nums.soulUrge} (душевный порыв) — что это говорит о внутренней мотивации vs. внешних целях?
 Как число ${nums.expression} (${nums.expression}) и число личности (${nums.personality}) создают разрыв или синергию между тем, как ${name} выражает себя и как воспринимается?
 Как знак ${zodiacDisplay} усиливает или уравновешивает эти числа?
 Как символический образ ${animalData.label} (${birthYear}) перекликается со всем профилем?
-Завершающее послание: что делает ${name} уникальной, какой главный вызов и подарок несёт это сочетание.
-Минимум 300 слов. Это самый важный раздел отчёта.`,
+Минимум 300 слов. Это важнейший раздел отчёта.
+
+<h2>${secs.forecast}</h2>
+Личный год ${personalYear} (${pyTheme}): ключевые темы, окна возможностей, зоны роста. Как знак ${zodiacDisplay} взаимодействует с темой личного года? Конкретные акценты по кварталам 2026 года. Не предсказания — приглашение к намеренным действиям.
+
+<h2>${secs.recommendations}</h2>
+5–6 конкретных, действенных рекомендаций — список (<ul><li>). Каждая связана с одним из чисел или с сочетанием. Практично, применимо в жизни.
+
+<h2>${secs.journalPrompts}</h2>
+6–7 открытых вопросов для дневника — список. Сочетай вопросы, связанные с числами, с вопросами из символического контекста. Вопросы должны открывать пространство для размышления.
+
+<h2>${secs.conclusion}</h2>
+Завершающее послание для ${name}: что делает это сочетание чисел, знака и символического образа уникальным, какой главный вызов и подарок несёт этот профиль. Тёплые, поддерживающие слова. Призыв к осознанному пути. 2–3 абзаца.`,
 
     en: `You are writing a premium personal self-reflection report for ${name}, born ${date}.
 
@@ -455,23 +470,25 @@ How ${name} may interact with others. Information-sharing style, communication p
 <h2>${secs.relationships}</h2>
 Use the symbolic context for Life Path ${nums.lifePath} (relationships). What ${name} may seek in relationships, how they may show up, what may be a source of friction. Warm, reflective tone.
 
-<h2>${secs.recommendations}</h2>
-5–6 specific, actionable recommendations — a list (<ul><li>). Each linked to one or more numbers or their combination. Practical, applicable.
-
-<h2>${secs.journalPrompts}</h2>
-6–7 open-ended journal questions — a list. Combine number-related questions with symbolic context questions. Questions should open space for reflection.
-
-<h2>${secs.forecast}</h2>
-Personal Year ${personalYear} (${pyTheme}): key themes, windows of opportunity, growth areas. How does ${zodiacDisplay} interact with the Personal Year theme? Specific quarterly accents for 2026. Not predictions — an invitation to intentional action.
-
 <h2>${secs.integratedProfile}</h2>
 ${loc.integratedProfileIntro}
 SYNTHESIS: How does Life Path ${nums.lifePath} interact with Soul Urge ${nums.soulUrge} — what does this say about inner motivation vs. outer goals?
 How do Expression ${nums.expression} and Personality ${nums.personality} create either a gap or synergy between how ${name} expresses and how they are perceived?
 How does ${zodiacDisplay} amplify or balance these numbers?
 How does the symbolic image of ${animalData.label} (${birthYear}) resonate with the whole profile?
-Closing message: what makes ${name} unique, the main challenge and gift this combination carries.
-Minimum 300 words. This is the most important section.`,
+Minimum 300 words. This is the most important section.
+
+<h2>${secs.forecast}</h2>
+Personal Year ${personalYear} (${pyTheme}): key themes, windows of opportunity, growth areas. How does ${zodiacDisplay} interact with the Personal Year theme? Specific quarterly accents for 2026. Not predictions — an invitation to intentional action.
+
+<h2>${secs.recommendations}</h2>
+5–6 specific, actionable recommendations — a list (<ul><li>). Each linked to one or more numbers or their combination. Practical, applicable.
+
+<h2>${secs.journalPrompts}</h2>
+6–7 open-ended journal questions — a list. Combine number-related questions with symbolic context questions. Questions should open space for reflection.
+
+<h2>${secs.conclusion}</h2>
+A closing message for ${name}: what makes this combination of numbers, sign, and symbolic image unique, the main challenge and gift this profile carries. Warm, encouraging words. An invitation to the conscious path ahead. 2–3 paragraphs.`,
 
     et: `Sa lood isiklikku enesereflektsiooni aruannet ${name} jaoks, sündinud ${date}.
 
@@ -487,7 +504,7 @@ ${forbiddenReminder}
 
 Loo HTML-aruanne järgmiste osadega (ainult <h2>,<h3>,<p>,<ul>,<li>,<strong>,<em>):
 Ära lisa arvutuste sektsiooni — see on juba eraldi genereeritud.
-${secs.portrait} | ${secs.zodiac}: ${zodiacDisplay} | ${secs.birthYear} | ${secs.strengths} | ${secs.emotional} | ${secs.communication} | ${secs.relationships} | ${secs.recommendations} | ${secs.journalPrompts} | ${secs.forecast} | ${secs.integratedProfile}
+${secs.portrait} | ${secs.zodiac}: ${zodiacDisplay} | ${secs.birthYear} | ${secs.strengths} | ${secs.emotional} | ${secs.communication} | ${secs.relationships} | ${secs.integratedProfile} | ${secs.forecast} | ${secs.recommendations} | ${secs.journalPrompts} | ${secs.conclusion}
 Isiklik, soe toon. Vähemalt 200 sõna sektsiooni kohta. Pöördu ${name} poole nimepidi. Ärge kasutage süsteeminimesid ega sisekoode.`,
 
     fi: `Luot henkilökohtaista itsereflektioraporttia ${name}:lle, syntynyt ${date}.
@@ -504,7 +521,7 @@ ${forbiddenReminder}
 
 Luo HTML-raportti seuraavilla osioilla (vain <h2>,<h3>,<p>,<ul>,<li>,<strong>,<em>):
 Älä lisää laskenta-osiota — se on jo luotu erikseen.
-${secs.portrait} | ${secs.zodiac}: ${zodiacDisplay} | ${secs.birthYear} | ${secs.strengths} | ${secs.emotional} | ${secs.communication} | ${secs.relationships} | ${secs.recommendations} | ${secs.journalPrompts} | ${secs.forecast} | ${secs.integratedProfile}
+${secs.portrait} | ${secs.zodiac}: ${zodiacDisplay} | ${secs.birthYear} | ${secs.strengths} | ${secs.emotional} | ${secs.communication} | ${secs.relationships} | ${secs.integratedProfile} | ${secs.forecast} | ${secs.recommendations} | ${secs.journalPrompts} | ${secs.conclusion}
 Henkilökohtainen, lämmin sävy. Vähintään 200 sanaa osiota kohden. Viittaa ${name}:ään nimellä. Älä käytä sisäisiä koodeja tai mallinimiä.`,
 
     lv: `Tu veido personisku pašrefleksijas ziņojumu ${name}, dzimis ${date}.
@@ -521,7 +538,7 @@ ${forbiddenReminder}
 
 Izveido HTML ziņojumu ar šādām sadaļām (tikai <h2>,<h3>,<p>,<ul>,<li>,<strong>,<em>):
 Nepievieno aprēķinu sadaļu — tā jau izveidota atsevišķi.
-${secs.portrait} | ${secs.zodiac}: ${zodiacDisplay} | ${secs.birthYear} | ${secs.strengths} | ${secs.emotional} | ${secs.communication} | ${secs.relationships} | ${secs.recommendations} | ${secs.journalPrompts} | ${secs.forecast} | ${secs.integratedProfile}
+${secs.portrait} | ${secs.zodiac}: ${zodiacDisplay} | ${secs.birthYear} | ${secs.strengths} | ${secs.emotional} | ${secs.communication} | ${secs.relationships} | ${secs.integratedProfile} | ${secs.forecast} | ${secs.recommendations} | ${secs.journalPrompts} | ${secs.conclusion}
 Personīgs, silts tonis. Vismaz 200 vārdi katrā sadaļā. Uzrunā ${name} vārdā. Neizmanto iekšējos kodus vai modeļu nosaukumus.`,
 
     lt: `Kuriate asmeninę savirefleksijos ataskaitą ${name}, gimęs ${date}.
@@ -538,7 +555,7 @@ ${forbiddenReminder}
 
 Sukurkite HTML ataskaitą su šiais skyriais (tik <h2>,<h3>,<p>,<ul>,<li>,<strong>,<em>):
 Nepridėkite skaičiavimų skyriaus — jis jau sugeneruotas atskirai.
-${secs.portrait} | ${secs.zodiac}: ${zodiacDisplay} | ${secs.birthYear} | ${secs.strengths} | ${secs.emotional} | ${secs.communication} | ${secs.relationships} | ${secs.recommendations} | ${secs.journalPrompts} | ${secs.forecast} | ${secs.integratedProfile}
+${secs.portrait} | ${secs.zodiac}: ${zodiacDisplay} | ${secs.birthYear} | ${secs.strengths} | ${secs.emotional} | ${secs.communication} | ${secs.relationships} | ${secs.integratedProfile} | ${secs.forecast} | ${secs.recommendations} | ${secs.journalPrompts} | ${secs.conclusion}
 Asmeninis, šiltas tonas. Mažiausiai 200 žodžių kiekvienam skyriui. Kreipkitės į ${name} vardu. Nenaudokite vidinių kodų ar modelių pavadinimų.`,
   };
 
@@ -563,17 +580,18 @@ Asmeninis, šiltas tonas. Mažiausiai 200 žodžių kiekvienam skyriui. Kreipkit
 
   const claudeContent = data.content[0].text;
 
-  // Assemble final report: Portrait + Calculations + Rest + Disclaimer
+  // Assemble final report:
+  // [Methodology note] + Portrait + [Calculations] + Zodiac + ... + Conclusion + [Short disclaimer]
   // Calculations section (pre-generated) is inserted before the Sun Sign section
-  let finalHTML;
+  let bodyHTML;
   const matchIdx = claudeContent.search(/<h2>[^<]*(?:Sun Sign|Знак Солнца|Päikesemärk|Aurinkomerkki|Saules zīme|Zodiako ženklas|Zodiaka zīme)/i);
   if (matchIdx > 0) {
-    finalHTML = claudeContent.slice(0, matchIdx) + calcHTML + "\n" + claudeContent.slice(matchIdx);
+    bodyHTML = claudeContent.slice(0, matchIdx) + calcHTML + "\n" + claudeContent.slice(matchIdx);
   } else {
-    finalHTML = claudeContent + "\n" + calcHTML;
+    bodyHTML = claudeContent + "\n" + calcHTML;
   }
 
-  finalHTML = finalHTML + "\n" + disclaimerHTML;
+  const finalHTML = methodologyNoteHTML + "\n" + bodyHTML + "\n" + disclaimerHTML;
 
   // ─── Production validation ─────────────────────────────────────────────────
   const validation = validateReport(finalHTML, lang, {
@@ -681,7 +699,11 @@ async function sendEmail(to, name, htmlContent, lang) {
   .num.master{color:#e8c97a}
   code{background:#0a0812;padding:2px 6px;border-radius:4px;font-size:12px;color:#7de8d0}
   .master-note{color:#e8c97a;font-size:13px;font-style:italic}
+  .methodology-block{margin-bottom:32px;padding:20px;background:#0f0f22;border-radius:10px;border:1px solid #2a2a5a}
+  .methodology-title{color:#8a7ab5;font-size:15px;margin-top:0;margin-bottom:10px}
+  .methodology-text{color:#6a5a8a;font-size:12px;line-height:1.7;margin:0 0 8px}
   .disclaimer-block{margin-top:40px;padding:20px;background:#0f0f22;border-radius:10px;border:1px solid #2a2a5a}
+  .disclaimer-title{color:#6a5a8a;font-size:13px;margin-top:0;margin-bottom:6px}
   .disclaimer-text{color:#6a5a8a;font-size:12px;line-height:1.7;margin:0}
   .footer{text-align:center;margin-top:32px;color:#4a3a6a;font-size:12px}
   .section-intro{color:#8a7ab5;font-size:14px;font-style:italic}

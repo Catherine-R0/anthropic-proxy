@@ -26,7 +26,14 @@ const LOCALIZATION = {
       journalPrompts:    "✦ Reflection Prompts",
       forecast:          "✦ Personal Year Forecast",
       integratedProfile: "✦ Integrated Personal Profile",
+      conclusion:        "✦ Closing Reflection",
     },
+
+    methodologyNoteTitle: "About This Report",
+    methodologyNoteBody: "This report is created for self-reflection, personal analysis, and a deeper understanding of individual patterns. It combines different interpretive layers: Big Five as a behavioral model for describing personality tendencies, DISC as a reference for understanding communication and interaction style, and Matrix of Destiny, numerology, name, date of birth, zodiac sign, and birth year as symbolic systems of self-knowledge.\n\nThese approaches are not used as diagnosis, prediction, or definitive statements about personality. Big Five and DISC help describe possible behavioral and communication tendencies, while symbolic systems add a personal and reflective context. The purpose of this report is to help you notice possible patterns, strengths, inner contradictions, and themes for conscious development.",
+
+    shortDisclaimerTitle: "A Brief Note",
+    shortDisclaimerBody: "This report is created for self-reflection and personal analysis. It is not a psychological diagnosis, prediction, or medical, legal, or financial advice. All insights should be treated as invitations to reflection — not fixed statements about who you are.",
 
     disclaimer: "This report is created for self-reflection and a deeper understanding of personal patterns. It combines behavioral reference models (Big Five personality research) and symbolic interpretation systems (numerology, Sun sign, birth year symbolism). This report is not a psychological diagnosis, medical, legal, or financial advice, and it does not claim to predict your future. All interpretations are invitations to self-reflection — not fixed truths about who you are.",
 
@@ -94,7 +101,14 @@ const LOCALIZATION = {
       journalPrompts:    "✦ Вопросы для саморефлексии",
       forecast:          "✦ Прогноз на 2026 год",
       integratedProfile: "✦ Сводный персональный портрет",
+      conclusion:        "✦ Заключение",
     },
+
+    methodologyNoteTitle: "Методологическая заметка",
+    methodologyNoteBody: "Этот отчёт создан для саморефлексии, личного анализа и более глубокого понимания индивидуальных паттернов. Он сочетает разные интерпретационные слои: Big Five — как поведенческую модель для описания личностных тенденций, DISC — как ориентир для понимания стиля коммуникации и взаимодействия, а Matrix of Destiny, нумерологию, имя, дату рождения, знак зодиака и год рождения — как символические системы самопознания.\n\nЭти подходы не используются как диагноз, предсказание или окончательное утверждение о личности. Big Five и DISC помогают описывать возможные поведенческие и коммуникативные тенденции, а символические системы добавляют персональный и рефлексивный контекст. Цель отчёта — помочь увидеть возможные паттерны, сильные стороны, внутренние противоречия и темы для осознанного развития.",
+
+    shortDisclaimerTitle: "Короткое примечание",
+    shortDisclaimerBody: "Этот отчёт создан для саморефлексии и личного анализа. Он не является психологическим диагнозом, предсказанием, медицинской, юридической или финансовой рекомендацией. Все выводы следует воспринимать как приглашение к размышлению, а не как фиксированные утверждения о личности.",
 
     disclaimer: "Этот отчёт создан для саморефлексии и более глубокого понимания личных паттернов. Он сочетает поведенческие ориентиры (исследования личностных паттернов) и символические системы интерпретации (нумерология, знак Солнца, символика года рождения). Отчёт не является психологическим диагнозом, медицинской, юридической или финансовой рекомендацией, а также не претендует на предсказание будущего. Все интерпретации — это приглашения к саморефлексии, а не фиксированные истины о том, кто ты есть.",
 
@@ -162,7 +176,14 @@ const LOCALIZATION = {
       journalPrompts:    "✦ Mõtiskluse küsimused",
       forecast:          "✦ Isikliku aasta prognoos",
       integratedProfile: "✦ Integreeritud isiklik portree",
+      conclusion:        "✦ Lõpumõtted",
     },
+
+    methodologyNoteTitle: "Selle aruande kohta",
+    methodologyNoteBody: "See aruanne on loodud eneserefleksiooniks, isiklikuks analüüsiks ja individuaalsete mustrite sügavamaks mõistmiseks. See ühendab erinevaid tõlgenduskihte: Big Five kui käitumuslik mudel isiksuseomaduste kirjeldamiseks, DISC kui orientiir suhtlemis- ja interaktsioonistiili mõistmiseks ning Matrix of Destiny, numeroloogia, nimi, sünniaeg, sodiaagimärk ja sünniaasta kui sümboolsed enesemõistmise süsteemid.\n\nNeid lähenemisi ei kasutata diagnoosi, ennustuse ega lõpliku isiksusväitena. Big Five ja DISC aitavad kirjeldada võimalikke käitumuslikke ja suhtlemislikke tendentse, samas kui sümboolsed süsteemid lisavad isiklikku ja refleksiivset konteksti. Aruande eesmärk on aidata märgata võimalikke mustreid, tugevusi, sisemisi vastuolusid ja teadliku arengu teemasid.",
+
+    shortDisclaimerTitle: "Lühike märkus",
+    shortDisclaimerBody: "See aruanne on loodud eneserefleksiooniks ja isiklikuks analüüsiks. See ei ole psühholoogiline diagnoos, ennustus ega meditsiiniline, juriidiline ega finantsnõuanne. Kõiki järeldusi tuleks käsitada kutse mõtiskluseks — mitte fikseeritud väidetena isiksuse kohta.",
 
     disclaimer: "See aruanne on loodud eneserefleksiooniks ja isiklike mustrite paremaks mõistmiseks. See ühendab käitumuslikke viitemudeleid ja sümboolseid tõlgendussüsteeme. See ei ole psühholoogiline diagnoos, meditsiiniline, juriidiline ega finantsnõustamine ega pretendeeri tuleviku ennustamisele.",
     behavioralLayerNote: "See jaotis kasutab käitumuslikke viitemudeleid suhtlemismustrite, emotsionaalse reageerimise ja kohanemise kirjeldamiseks. See ei ole diagnoos ega fikseeritud etikett.",
@@ -212,7 +233,14 @@ const LOCALIZATION = {
       journalPrompts:    "✦ Pohdintakysymykset",
       forecast:          "✦ Henkilökohtaisen vuoden ennuste",
       integratedProfile: "✦ Integroitu henkilökohtainen profiili",
+      conclusion:        "✦ Loppupohdinnat",
     },
+
+    methodologyNoteTitle: "Tästä raportista",
+    methodologyNoteBody: "Tämä raportti on luotu itsereflektioon, henkilökohtaiseen analyysiin ja yksilöllisten mallien syvempään ymmärtämiseen. Se yhdistää erilaisia tulkintakerroksia: Big Five käyttäytymismallina persoonallisuuden taipumusten kuvaamiseen, DISC viitepisteenä viestintä- ja vuorovaikutustyylin ymmärtämiseen sekä Matrix of Destiny, numerologia, nimi, syntymäaika, horoskooppimerkki ja syntymävuosi symbolisina itsetuntemuksen järjestelminä.\n\nNäitä lähestymistapoja ei käytetä diagnoosina, ennustuksena tai lopullisina persoonallisuusväittäminä. Big Five ja DISC auttavat kuvaamaan mahdollisia käyttäytymis- ja viestintätendenssiä, kun taas symboliset järjestelmät lisäävät henkilökohtaista ja reflektiivistä kontekstia. Raportin tarkoituksena on auttaa sinua huomaamaan mahdollisia malleja, vahvuuksia, sisäisiä ristiriitoja ja tietoisen kehityksen teemoja.",
+
+    shortDisclaimerTitle: "Lyhyt huomio",
+    shortDisclaimerBody: "Tämä raportti on luotu itsereflektioon ja henkilökohtaiseen analyysiin. Se ei ole psykologinen diagnoosi, ennustus eikä lääketieteellinen, oikeudellinen tai taloudellinen neuvonta. Kaikkia päätelmiä tulisi pitää kutsuna pohdintaan — ei kiinteinä väittäminä siitä, kuka olet.",
 
     disclaimer: "Tämä raportti on luotu itsereflektioon ja henkilökohtaisten mallien parempaan ymmärtämiseen. Se ei ole psykologinen diagnoosi, lääketieteellinen, oikeudellinen tai taloudellinen neuvonta eikä väitä ennustavansa tulevaisuutta.",
     behavioralLayerNote: "Tämä osio kuvaa mahdollisia taipumuksia viestinnässä, tunnereaktiossa ja sopeutumisessa. Se ei ole diagnoosi eikä kiinteä persoonallisuusmerkintä.",
@@ -262,7 +290,14 @@ const LOCALIZATION = {
       journalPrompts:    "✦ Pārdomas un jautājumi",
       forecast:          "✦ Personīgā gada prognoze",
       integratedProfile: "✦ Integrētais personīgais portrets",
+      conclusion:        "✦ Noslēguma pārdomas",
     },
+
+    methodologyNoteTitle: "Par šo ziņojumu",
+    methodologyNoteBody: "Šis ziņojums ir izveidots pašrefleksijai, personiskajai analīzei un individuālo modeļu dziļākai izpratnei. Tas apvieno dažādus interpretācijas slāņus: Big Five kā uzvedības modeli personības tendenču aprakstīšanai, DISC kā orientieri komunikācijas un mijiedarbības stila izpratnei, kā arī Matrix of Destiny, numeroloģiju, vārdu, dzimšanas datumu, zodiaka zīmi un dzimšanas gadu kā simboliskas pašizziņas sistēmas.\n\nŠīs pieejas netiek izmantotas kā diagnoze, prognoze vai galīgs apgalvojums par personību. Big Five un DISC palīdz aprakstīt iespējamās uzvedības un komunikācijas tendences, savukārt simboliskās sistēmas pievieno personīgu un reflektīvu kontekstu. Ziņojuma mērķis ir palīdzēt pamanīt iespējamos modeļus, stiprās puses, iekšējos pretrunus un apzinātas attīstības tēmas.",
+
+    shortDisclaimerTitle: "Īsa piezīme",
+    shortDisclaimerBody: "Šis ziņojums ir izveidots pašrefleksijai un personiskajai analīzei. Tas nav psiholoģiska diagnoze, prognoze vai medicīnisks, juridisks vai finansiāls padoms. Visi secinājumi jāuztver kā uzaicinājums pārdomāt — nevis kā fiksēti apgalvojumi par to, kas tu esi.",
 
     disclaimer: "Šis ziņojums ir izveidots pašrefleksijai un personisko modeļu labākai izpratnei. Tas nav psiholoģiska diagnoze, medicīnisks, juridisks vai finansiāls padoms, un tas nepretendē uz nākotnes prognozēšanu.",
     behavioralLayerNote: "Šī sadaļa apraksta iespējamās tendences komunikācijā, emocionālajā reakcijā un pielāgošanās spējā. Tas nav diagnoze vai fiksēta etiķete.",
@@ -312,7 +347,14 @@ const LOCALIZATION = {
       journalPrompts:    "✦ Apmąstymų klausimai",
       forecast:          "✦ Asmeninio meto prognozė",
       integratedProfile: "✦ Integruotas asmeninis portretas",
+      conclusion:        "✦ Baigiamieji apmąstymai",
     },
+
+    methodologyNoteTitle: "Apie šią ataskaitą",
+    methodologyNoteBody: "Ši ataskaita skirta savirefleksijai, asmeninei analizei ir gilesniam individualiems modeliams suprasti. Ji sujungia skirtingus interpretacijos sluoksnius: Big Five kaip elgesio modelį asmenybės tendencijoms apibūdinti, DISC kaip orientyrą komunikacijos ir sąveikos stiliui suprasti, o Matrix of Destiny, numerologiją, vardą, gimimo datą, zodiako ženklą ir gimimo metus — kaip simbolines savipažinimo sistemas.\n\nŠie metodai nenaudojami kaip diagnozė, prognozė ar galutinis teiginys apie asmenybę. Big Five ir DISC padeda apibūdinti galimas elgesio ir komunikacijos tendencijas, o simbolinės sistemos prideda asmeninį ir reflektyvų kontekstą. Ataskaitos tikslas — padėti pastebėti galimus modelius, stiprybes, vidinius prieštaravimus ir sąmoningo tobulėjimo temas.",
+
+    shortDisclaimerTitle: "Trumpa pastaba",
+    shortDisclaimerBody: "Ši ataskaita skirta savirefleksijai ir asmeninei analizei. Ji nėra psichologinė diagnozė, prognozė ar medicininė, teisinė ar finansinė konsultacija. Visas išvadas reikėtų vertinti kaip kvietimą apmąstyti — ne kaip fiksuotus teiginius apie tai, kas esate.",
 
     disclaimer: "Ši ataskaita skirta savęs pažinimui ir asmeninių modelių geresniam supratimui. Ji nėra psichologinė diagnozė, medicininė, teisinė ar finansinė konsultacija ir nepretenduje numatyti ateities.",
     behavioralLayerNote: "Šiame skyriuje apibūdinamos galimos tendencijos bendraujant, emociškai reaguojant ir prisitaikant. Tai ne diagnozė ar fiksuota etiketė.",
