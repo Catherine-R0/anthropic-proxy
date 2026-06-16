@@ -616,6 +616,22 @@ app.options("*", (req, res) => res.sendStatus(200));
 
 app.get("/", (req, res) => res.json({ status: "ok", message: "Cosmic Reading proxy is running" }));
 
+// Protected test endpoint — requires Authorization: Bearer <ANTHROPIC_API_KEY>
+app.post("/generate", async (req, res) => {
+  const apiKey = process.env.ANTHROPIC_API_KEY;
+  const auth = (req.headers.authorization || "").replace("Bearer ", "").trim();
+  if (!auth || auth !== apiKey) return res.status(401).json({ error: "Unauthorized" });
+
+  const { name, date, lang } = req.body;
+  if (!name || !date) return res.status(400).json({ error: "name and date required" });
+  try {
+    const html = await generateFullReading(name, date, lang || "ru");
+    res.json({ status: "ok", length: html.length, html });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 // Free preview proxy (passes through to Anthropic)
 app.post("/", async (req, res) => {
   try {
