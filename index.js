@@ -162,12 +162,15 @@ function buildSymbolicBlock(nums, lang) {
 
 // ─── Pre-generated sections (no Claude involvement — guaranteed accuracy) ───
 
+// Convert \n in step strings to <br> for HTML rendering
+function stepsHtml(s) {
+  return s.replace(/\n/g, "<br>");
+}
+
 function renderCalcSection(steps, loc, name) {
   const L = loc.labels;
   const s = loc.sections;
   const isMaster = steps.lifePath.isMaster;
-  const masterNote = isMaster
-    ? `<span class="master-badge"> ★ ${loc.masterNumberNote}</span>` : "";
 
   return `
 <h2>${s.calculations}</h2>
@@ -175,52 +178,40 @@ function renderCalcSection(steps, loc, name) {
 <div class="calc-grid">
 
   <div class="calc-item">
-    <h3>${s.lifePath}: <strong class="num${steps.lifePath.isMaster?" master":""}">
+    <h3>${s.lifePath}: <strong class="num${isMaster?" master":""}">
       ${steps.lifePath.result}${isMaster?" ★":""}
     </strong></h3>
     <p><span class="calc-label">${L.input}:</span> ${steps.lifePath.input}</p>
-    <p><span class="calc-label">${L.formula}:</span>
-      ${loc.language_name==="Русский"
-        ? "Сумма всех цифр даты рождения → редукция до 1–9 (мастер-числа 11, 22, 33 не редуцируются)"
-        : "Sum all digits of date of birth → reduce to 1–9 (master numbers 11, 22, 33 preserved)"}</p>
-    <p><span class="calc-label">${L.stepByStep}:</span> <code>${steps.lifePath.steps}</code></p>
+    <p><span class="calc-label">${L.formula}:</span> ${L.lifePathFormula}</p>
+    <p><span class="calc-label">${L.stepByStep}:</span> <code>${stepsHtml(steps.lifePath.steps)}</code></p>
     ${isMaster ? `<p class="master-note">${loc.masterNumberNote}</p>` : ""}
   </div>
 
   <div class="calc-item">
     <h3>${s.soulUrge}: <strong class="num">${steps.soulUrge.result}</strong></h3>
     <p><span class="calc-label">${L.vowels}:</span> ${steps.soulUrge.input}</p>
-    <p><span class="calc-label">${L.formula}:</span>
-      ${loc.language_name==="Русский"
-        ? "Сумма числовых значений гласных букв имени → редукция"
-        : "Sum Pythagorean values of vowels in name → reduce"}</p>
-    <p><span class="calc-label">${L.stepByStep}:</span> <code>${steps.soulUrge.steps}</code></p>
+    <p><span class="calc-label">${L.formula}:</span> ${L.soulUrgeFormula}</p>
+    <p><span class="calc-label">${L.stepByStep}:</span> <code>${stepsHtml(steps.soulUrge.steps)}</code></p>
   </div>
 
   <div class="calc-item">
     <h3>${s.expression}: <strong class="num">${steps.expression.result}</strong></h3>
     <p><span class="calc-label">${L.letters}:</span> ${steps.expression.input}</p>
-    <p><span class="calc-label">${L.formula}:</span>
-      ${loc.language_name==="Русский"
-        ? "Сумма числовых значений всех букв имени → редукция"
-        : "Sum Pythagorean values of all letters in name → reduce"}</p>
-    <p><span class="calc-label">${L.stepByStep}:</span> <code>${steps.expression.steps}</code></p>
+    <p><span class="calc-label">${L.formula}:</span> ${L.expressionFormula}</p>
+    <p><span class="calc-label">${L.stepByStep}:</span> <code>${stepsHtml(steps.expression.steps)}</code></p>
   </div>
 
   <div class="calc-item">
     <h3>${s.personality}: <strong class="num">${steps.personality.result}</strong></h3>
     <p><span class="calc-label">${L.consonants}:</span> ${steps.personality.input}</p>
-    <p><span class="calc-label">${L.formula}:</span>
-      ${loc.language_name==="Русский"
-        ? "Сумма числовых значений согласных букв имени → редукция"
-        : "Sum Pythagorean values of consonants in name → reduce"}</p>
-    <p><span class="calc-label">${L.stepByStep}:</span> <code>${steps.personality.steps}</code></p>
+    <p><span class="calc-label">${L.formula}:</span> ${L.personalityFormula}</p>
+    <p><span class="calc-label">${L.stepByStep}:</span> <code>${stepsHtml(steps.personality.steps)}</code></p>
   </div>
 
   <div class="calc-item">
-    <h3>${loc.language_name==="Русский"?"Личный год 2026":"Personal Year 2026"}: <strong class="num">${steps.personalYear.result}</strong></h3>
+    <h3>${L.personalYearCalcTitle}: <strong class="num">${steps.personalYear.result}</strong></h3>
     <p><span class="calc-label">${L.formula}:</span> ${L.personalYearFormula}</p>
-    <p><span class="calc-label">${L.stepByStep}:</span> <code>${steps.personalYear.steps}</code></p>
+    <p><span class="calc-label">${L.stepByStep}:</span> <code>${stepsHtml(steps.personalYear.steps)}</code></p>
   </div>
 
 </div>`;

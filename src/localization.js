@@ -59,6 +59,11 @@ const LOCALIZATION = {
       stepByStep: "Step by step",
       formula: "Formula",
       personalYearFormula: "Birth day + birth month + year digit sum → reduce to 1–9",
+      personalYearCalcTitle: "Personal Year 2026",
+      lifePathFormula:    "Sum all digits of date of birth → reduce to 1–9 (master numbers 11, 22, 33 preserved)",
+      soulUrgeFormula:    "Sum Pythagorean values of vowels in name → reduce",
+      expressionFormula:  "Sum Pythagorean values of all letters in name → reduce",
+      personalityFormula: "Sum Pythagorean values of consonants in name → reduce",
     },
 
     easternAnimals: {
@@ -134,6 +139,11 @@ const LOCALIZATION = {
       stepByStep: "Пошагово",
       formula: "Формула",
       personalYearFormula: "День рождения + месяц рождения + сумма цифр года → редукция до 1–9",
+      personalYearCalcTitle: "Личный год 2026",
+      lifePathFormula:    "Сумма всех цифр даты рождения → редукция до 1–9 (мастер-числа 11, 22, 33 не редуцируются)",
+      soulUrgeFormula:    "Сумма числовых значений гласных букв имени → редукция",
+      expressionFormula:  "Сумма числовых значений всех букв имени → редукция",
+      personalityFormula: "Сумма числовых значений согласных букв имени → редукция",
     },
 
     easternAnimals: {
@@ -198,6 +208,11 @@ const LOCALIZATION = {
       digitSum: "Numbrite summa", reduction: "Redutseerimine", result: "Tulemus",
       masterPreserved: "Meistrarv — ei redutseerita edasi", stepByStep: "Samm-sammult",
       formula: "Valem", personalYearFormula: "Sünniday + sünnikuu + aasta numbrite summa → redutseeritakse 1–9ni",
+      personalYearCalcTitle: "Isiklik aasta 2026",
+      lifePathFormula:    "Kõigi sünnikuupäeva numbrite summa → redutseerimine 1–9ni (meistrarve 11, 22, 33 ei redutseerita)",
+      soulUrgeFormula:    "Nime täishäälikute pythagorase väärtuste summa → redutseerimine",
+      expressionFormula:  "Kõigi nime tähtede pythagorase väärtuste summa → redutseerimine",
+      personalityFormula: "Nime kaashäälikute pythagorase väärtuste summa → redutseerimine",
     },
     easternAnimals: {
       Rat:{label:"Rott",traits:"Leidlik, kohanemisvõimeline, terane"}, Ox:{label:"Härg",traits:"Püsiv, usaldusväärne, metodiline"},
@@ -255,6 +270,11 @@ const LOCALIZATION = {
       digitSum: "Numeroiden summa", reduction: "Reduktio", result: "Tulos",
       masterPreserved: "Mestarluku — ei redusoida edelleen", stepByStep: "Askel askeleelta",
       formula: "Kaava", personalYearFormula: "Syntymäpäivä + syntymäkuukausi + vuoden numerosumma → redusoidaan 1–9:ksi",
+      personalYearCalcTitle: "Henkilökohtainen vuosi 2026",
+      lifePathFormula:    "Kaikki syntymäajan numerot yhteen → reduktio 1–9 (mestarluvut 11, 22, 33 säilytetään)",
+      soulUrgeFormula:    "Nimen vokaalien pythagoralaisten arvojen summa → reduktio",
+      expressionFormula:  "Kaikkien nimen kirjainten pythagoralaisten arvojen summa → reduktio",
+      personalityFormula: "Nimen konsonanttien pythagoralaisten arvojen summa → reduktio",
     },
     easternAnimals: {
       Rat:{label:"Rotta",traits:"Kekseliäs, sopeutuvainen, nopeaälyinen"}, Ox:{label:"Härkä",traits:"Sinnikäs, luotettava, järjestelmällinen"},
@@ -312,6 +332,11 @@ const LOCALIZATION = {
       digitSum: "Ciparu summa", reduction: "Redukcija", result: "Rezultāts",
       masterPreserved: "Meistara skaitlis — netiek reducēts tālāk", stepByStep: "Soli pa solim",
       formula: "Formula", personalYearFormula: "Dzimšanas diena + dzimšanas mēnesis + gada ciparu summa → reducē līdz 1–9",
+      personalYearCalcTitle: "Personīgais gads 2026",
+      lifePathFormula:    "Visu dzimšanas datuma ciparu summa → redukcija līdz 1–9 (meistara skaitļi 11, 22, 33 tiek saglabāti)",
+      soulUrgeFormula:    "Vārda patskaņu pitagorisko vērtību summa → redukcija",
+      expressionFormula:  "Visu vārda burtu pitagorisko vērtību summa → redukcija",
+      personalityFormula: "Vārda līdzskaņu pitagorisko vērtību summa → redukcija",
     },
     easternAnimals: {
       Rat:{label:"Žurka",traits:"Atjautīgs, pielāgojams, ātri domājošs"}, Ox:{label:"Vērsis",traits:"Neatlaidīgs, uzticams, metodisks"},
@@ -369,6 +394,11 @@ const LOCALIZATION = {
       digitSum: "Skaitmenų suma", reduction: "Redukcija", result: "Rezultatas",
       masterPreserved: "Meistro skaičius — toliau neredukuojamas", stepByStep: "Žingsnis po žingsnio",
       formula: "Formulė", personalYearFormula: "Gimimo diena + gimimo mėnuo + metų skaitmenų suma → redukuojama iki 1–9",
+      personalYearCalcTitle: "Asmeninis metų skaičius 2026",
+      lifePathFormula:    "Visų gimimo datos skaitmenų suma → redukcija iki 1–9 (meistro skaičiai 11, 22, 33 neredukuojami)",
+      soulUrgeFormula:    "Vardo balsių Pitagoro reikšmių suma → redukcija",
+      expressionFormula:  "Visų vardo raidžių Pitagoro reikšmių suma → redukcija",
+      personalityFormula: "Vardo priebalsių Pitagoro reikšmių suma → redukcija",
     },
     easternAnimals: {
       Rat:{label:"Žiurkė",traits:"Išradingas, prisitaikantis, greito proto"}, Ox:{label:"Jautis",traits:"Atkaklus, patikimas, metodiškas"},

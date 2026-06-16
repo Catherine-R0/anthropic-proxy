@@ -158,6 +158,83 @@ function calcPersonalYear(dateStr, year) {
   return reduceNumPersonalYear(total);
 }
 
+// ─── Localized labels for calculation steps ─────────────────────────────────
+
+const CALC_LABELS = {
+  en: {
+    day:        "Day",
+    month:      "Month",
+    reportYear: "Report year",
+    total:      "Total",
+    noVowels:      "no vowels found",
+    noConsonants:  "no consonants found",
+  },
+  ru: {
+    day:        "День",
+    month:      "Месяц",
+    reportYear: "Год отчёта",
+    total:      "Итог",
+    noVowels:      "гласных не найдено",
+    noConsonants:  "согласных не найдено",
+  },
+  et: {
+    day:        "Päev",
+    month:      "Kuu",
+    reportYear: "Aruande aasta",
+    total:      "Kokku",
+    noVowels:      "täishäälikuid ei leitud",
+    noConsonants:  "kaashäälikuid ei leitud",
+  },
+  fi: {
+    day:        "Päivä",
+    month:      "Kuukausi",
+    reportYear: "Raportin vuosi",
+    total:      "Yhteensä",
+    noVowels:      "vokaaleja ei löydy",
+    noConsonants:  "konsonantteja ei löydy",
+  },
+  lv: {
+    day:        "Diena",
+    month:      "Mēnesis",
+    reportYear: "Atskaites gads",
+    total:      "Kopā",
+    noVowels:      "patskaņu nav",
+    noConsonants:  "līdzskaņu nav",
+  },
+  lt: {
+    day:        "Diena",
+    month:      "Mėnuo",
+    reportYear: "Ataskaitos metai",
+    total:      "Iš viso",
+    noVowels:      "balsių nerasta",
+    noConsonants:  "priebalsių nerasta",
+  },
+};
+
+// Build multi-line Personal Year step string (uses \n, caller converts to <br>)
+function buildPersonalYearSteps(d, m, year, dayReduced, monthFinal, yearSum, yearReduced, pyTotal, personalYear, labels) {
+  const dayLine = d > 9
+    ? `${labels.day}: ${d} → ${String(d).split("").join(" + ")} = ${dayReduced}`
+    : `${labels.day}: ${d}`;
+
+  const monthLine = m > 9
+    ? `${labels.month}: ${m} → ${String(m).split("").join(" + ")} = ${monthFinal}`
+    : `${labels.month}: ${m}`;
+
+  const yearDigits = String(year).split("").join(" + ");
+  let yearLine = `${labels.reportYear}: ${year} → ${yearDigits} = ${yearSum}`;
+  if (yearSum > 9) {
+    yearLine += ` → ${String(yearSum).split("").join(" + ")} = ${yearReduced}`;
+  }
+
+  let totalLine = `${labels.total}: ${dayReduced} + ${monthFinal} + ${yearReduced} = ${pyTotal}`;
+  if (pyTotal !== personalYear) {
+    totalLine += ` → ${String(pyTotal).split("").join(" + ")} = ${personalYear}`;
+  }
+
+  return [dayLine, monthLine, yearLine, totalLine].join("\n");
+}
+
 // ─── Step-by-step calculation records (for transparent section) ─────────────
 
 function getCalcSteps(name, date, lang = "en") {
@@ -200,6 +277,8 @@ function getCalcSteps(name, date, lang = "en") {
   const pyTotal      = dayReduced + monthFinal + yearReduced;
   const personalYear = reduceNumPersonalYear(pyTotal);
 
+  const cl = CALC_LABELS[lang] || CALC_LABELS.en;
+
   return {
     lifePath: {
       result: lifePath,
@@ -207,7 +286,7 @@ function getCalcSteps(name, date, lang = "en") {
       input: date,
       digits: dateDigits,
       rawSum: lifePathRaw,
-      steps: `${dateClean} → ${dateDigits.join("+")} = ${lifePathRaw}${lifePathRaw !== lifePath ? ` → ${String(lifePathRaw).split("").join("+")} = ${lifePath}${isMaster ? " ★" : ""}` : ""}`,
+      steps: `${dateClean} → ${dateDigits.join(" + ")} = ${lifePathRaw}${lifePathRaw !== lifePath ? ` → ${String(lifePathRaw).split("").join(" + ")} = ${lifePath}${isMaster ? " ★" : ""}` : ""}`,
     },
     soulUrge: {
       result: soulUrge,
@@ -216,7 +295,7 @@ function getCalcSteps(name, date, lang = "en") {
       rawSum: soulUrgeRaw,
       steps: vowelValues.length
         ? `${vowelValues.map(v => `${v.letter}=${v.value}`).join(" + ")} = ${soulUrgeRaw}${soulUrgeRaw !== soulUrge ? ` → ${soulUrge}` : ""}`
-        : "no vowels found",
+        : cl.noVowels,
     },
     expression: {
       result: expression,
@@ -232,7 +311,7 @@ function getCalcSteps(name, date, lang = "en") {
       rawSum: personalityRaw,
       steps: consValues.length
         ? `${consValues.map(v => `${v.letter}=${v.value}`).join(" + ")} = ${personalityRaw}${personalityRaw !== personality ? ` → ${personality}` : ""}`
-        : "no consonants found",
+        : cl.noConsonants,
     },
     personalYear: {
       result: personalYear,
@@ -242,7 +321,7 @@ function getCalcSteps(name, date, lang = "en") {
       yearSum,
       yearReduced,
       total: pyTotal,
-      steps: `Day ${d}→${dayReduced} + Month ${m}→${monthFinal} + Year 2026 digit sum ${yearSum}→${yearReduced} = ${dayReduced}+${monthFinal}+${yearReduced} = ${pyTotal}${pyTotal !== personalYear ? ` → ${personalYear}` : ""}`,
+      steps: buildPersonalYearSteps(d, m, 2026, dayReduced, monthFinal, yearSum, yearReduced, pyTotal, personalYear, cl),
     },
   };
 }
@@ -334,6 +413,7 @@ module.exports = {
   getEasternAnimal,
   MASTER_NUMBERS,
   reduceNum,
+  CALC_LABELS,
   LETTER_VALUES_EN,
   LETTER_VALUES_RU,
   LETTER_VALUES_LATIN_EXTENDED,
