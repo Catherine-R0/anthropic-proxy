@@ -46,6 +46,7 @@ const FORBIDDEN_PATTERNS = [
   { pattern: /you will never\b/i,          category: "SAFETY",           description: "Absolute claim: you will never" },
   { pattern: /\bпредсказывает\b/i,         category: "SAFETY",           description: "Deterministic: предсказывает" },
   { pattern: /\bpredicts\b/i,              category: "SAFETY",           description: "Deterministic: predicts" },
+  { pattern: /<h2>[^<]*Прогноз/,           category: "SAFETY",           description: "Predictive section title: Прогноз in <h2>" },
 ];
 
 // Required sections by language

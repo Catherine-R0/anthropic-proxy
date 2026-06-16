@@ -240,6 +240,17 @@ function renderDisclaimerSection(loc) {
 </div>`;
 }
 
+function renderReferralCTA(loc) {
+  if (!loc.referralCTA) return "";
+  const { heading, body, buttonText } = loc.referralCTA;
+  return `
+<div class="referral-cta">
+  <h3 class="referral-heading">${heading}</h3>
+  <p class="referral-body">${body}</p>
+  <a class="referral-button" href="https://cosmicreading.com">[ ${buttonText} ]</a>
+</div>`;
+}
+
 // ─── Life Path names ─────────────────────────────────────────────────────────
 const LP_NAMES = {
   en:{1:"The Leader",2:"The Peacemaker",3:"The Creator",4:"The Builder",
@@ -303,6 +314,7 @@ async function generateFullReading(name, date, lang) {
   // Pre-generated sections
   const methodologyNoteHTML = renderMethodologyNote(loc);
   const calcHTML            = renderCalcSection(steps, loc, name);
+  const referralCTAHTML     = renderReferralCTA(loc);
   const disclaimerHTML      = renderDisclaimerSection(loc);
 
   // Behavioral and symbolic context blocks (internal only, cleaned)
@@ -586,7 +598,7 @@ Asmeninis, šiltas tonas. ~120 žodžių kiekvienam skyriui (integruotas portret
     bodyHTML = claudeContent + "\n" + calcHTML;
   }
 
-  const finalHTML = methodologyNoteHTML + "\n" + bodyHTML + "\n" + disclaimerHTML;
+  const finalHTML = methodologyNoteHTML + "\n" + bodyHTML + "\n" + referralCTAHTML + "\n" + disclaimerHTML;
 
   // ─── Production validation ─────────────────────────────────────────────────
   const validation = validateReport(finalHTML, lang, {
