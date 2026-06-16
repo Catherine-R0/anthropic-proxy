@@ -505,7 +505,7 @@ ${forbiddenReminder}
 Loo HTML-aruanne järgmiste osadega (ainult <h2>,<h3>,<p>,<ul>,<li>,<strong>,<em>):
 Ära lisa arvutuste sektsiooni — see on juba eraldi genereeritud.
 ${secs.portrait} | ${secs.zodiac}: ${zodiacDisplay} | ${secs.birthYear} | ${secs.strengths} | ${secs.emotional} | ${secs.communication} | ${secs.relationships} | ${secs.integratedProfile} | ${secs.forecast} | ${secs.recommendations} | ${secs.journalPrompts} | ${secs.conclusion}
-Isiklik, soe toon. ~120 sõna sektsiooni kohta (integreeritud portree puhul rohkem). Ärge kasutage HTML-koodiblokke ega taganema ``` märke — väljastage ainult HTML. Pöördu ${name} poole nimepidi. Ärge kasutage süsteeminimesid ega sisekoode.`,
+Isiklik, soe toon. ~120 sõna sektsiooni kohta (integreeritud portree puhul rohkem). Väljasta ainult HTML ilma koodiplokita. Pöördu ${name} poole nimepidi. Ärge kasutage süsteeminimesid ega sisekoode.`,
 
     fi: `Luot henkilökohtaista itsereflektioraporttia ${name}:lle, syntynyt ${date}.
 
@@ -522,7 +522,7 @@ ${forbiddenReminder}
 Luo HTML-raportti seuraavilla osioilla (vain <h2>,<h3>,<p>,<ul>,<li>,<strong>,<em>):
 Älä lisää laskenta-osiota — se on jo luotu erikseen.
 ${secs.portrait} | ${secs.zodiac}: ${zodiacDisplay} | ${secs.birthYear} | ${secs.strengths} | ${secs.emotional} | ${secs.communication} | ${secs.relationships} | ${secs.integratedProfile} | ${secs.forecast} | ${secs.recommendations} | ${secs.journalPrompts} | ${secs.conclusion}
-Henkilökohtainen, lämmin sävy. ~120 sanaa osiota kohden (integroitu profiili voi olla pidempi). Älä käytä HTML-koodilohkoja tai ``` merkkejä — tulosta vain HTML. Viittaa ${name}:ään nimellä. Älä käytä sisäisiä koodeja tai mallinimiä.`,
+Henkilökohtainen, lämmin sävy. ~120 sanaa osiota kohden (integroitu profiili voi olla pidempi). Tulosta vain HTML ilman koodilohkoja. Viittaa ${name}:ään nimellä. Älä käytä sisäisiä koodeja tai mallinimiä.`,
 
     lv: `Tu veido personisku pašrefleksijas ziņojumu ${name}, dzimis ${date}.
 
@@ -539,7 +539,7 @@ ${forbiddenReminder}
 Izveido HTML ziņojumu ar šādām sadaļām (tikai <h2>,<h3>,<p>,<ul>,<li>,<strong>,<em>):
 Nepievieno aprēķinu sadaļu — tā jau izveidota atsevišķi.
 ${secs.portrait} | ${secs.zodiac}: ${zodiacDisplay} | ${secs.birthYear} | ${secs.strengths} | ${secs.emotional} | ${secs.communication} | ${secs.relationships} | ${secs.integratedProfile} | ${secs.forecast} | ${secs.recommendations} | ${secs.journalPrompts} | ${secs.conclusion}
-Personīgs, silts tonis. ~120 vārdi katrā sadaļā (integrētais portrets var būt garāks). Neizmanto HTML koda blokus vai ``` zīmes — izvadiet tikai HTML. Uzrunā ${name} vārdā. Neizmanto iekšējos kodus vai modeļu nosaukumus.`,
+Personīgs, silts tonis. ~120 vārdi katrā sadaļā (integrētais portrets var būt garāks). Izvadiet tikai HTML bez koda blokiem. Uzrunā ${name} vārdā. Neizmanto iekšējos kodus vai modeļu nosaukumus.`,
 
     lt: `Kuriate asmeninę savirefleksijos ataskaitą ${name}, gimęs ${date}.
 
@@ -556,7 +556,7 @@ ${forbiddenReminder}
 Sukurkite HTML ataskaitą su šiais skyriais (tik <h2>,<h3>,<p>,<ul>,<li>,<strong>,<em>):
 Nepridėkite skaičiavimų skyriaus — jis jau sugeneruotas atskirai.
 ${secs.portrait} | ${secs.zodiac}: ${zodiacDisplay} | ${secs.birthYear} | ${secs.strengths} | ${secs.emotional} | ${secs.communication} | ${secs.relationships} | ${secs.integratedProfile} | ${secs.forecast} | ${secs.recommendations} | ${secs.journalPrompts} | ${secs.conclusion}
-Asmeninis, šiltas tonas. ~120 žodžių kiekvienam skyriui (integruotas portretas gali būti ilgesnis). Nenaudokite HTML kodo blokų ar ``` ženklų — išveskite tik HTML. Kreipkitės į ${name} vardu. Nenaudokite vidinių kodų ar modelių pavadinimų.`,
+Asmeninis, šiltas tonas. ~120 žodžių kiekvienam skyriui (integruotas portretas gali būti ilgesnis). Išveskite tik HTML be kodo blokų. Kreipkitės į ${name} vardu. Nenaudokite vidinių kodų ar modelių pavadinimų.`,
   };
 
   const prompt = prompts[lang] || prompts["en"];
