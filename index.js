@@ -570,7 +570,7 @@ Asmeninis, šiltas tonas. Mažiausiai 200 žodžių kiekvienam skyriui. Kreipkit
     },
     body: JSON.stringify({
       model: "claude-sonnet-4-6",
-      max_tokens: 8000,
+      max_tokens: 12000,
       messages: [{ role: "user", content: prompt }],
     }),
   });
