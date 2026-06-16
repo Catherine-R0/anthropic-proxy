@@ -650,6 +650,23 @@ app.post("/generate", async (req, res) => {
   }
 });
 
+// Protected test endpoint — generate report and send to email
+app.post("/send-test", async (req, res) => {
+  const apiKey = process.env.ANTHROPIC_API_KEY;
+  const auth = (req.headers.authorization || "").replace("Bearer ", "").trim();
+  if (!auth || auth !== apiKey) return res.status(401).json({ error: "Unauthorized" });
+
+  const { name, date, lang, email } = req.body;
+  if (!name || !date || !email) return res.status(400).json({ error: "name, date and email required" });
+  try {
+    const html = await generateFullReading(name, date, lang || "ru");
+    const emailResult = await sendEmail(email, name, html, lang || "ru");
+    res.json({ status: "ok", length: html.length, email: emailResult });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 // Free preview proxy (passes through to Anthropic)
 app.post("/", async (req, res) => {
   try {
