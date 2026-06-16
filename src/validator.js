@@ -68,6 +68,7 @@ const REQUIRED_SECTION_PATTERNS_FALLBACK = [
   /calculations|расчёты|arvutused|laskelmat|aprēķini|skaičiavimai/i,
   /birth year|год рождения|sünniaasta|syntymävuosi|dzimšanas gads|gimimo metai/i,
   /integrated.*profile|сводный|integreeritud|integroitu|integrētais|integruotas/i,
+  /lõpumõtted|loppupohdinnat|noslēguma|baigiamieji/i,
 ];
 
 // What the methodology note must mention (validated against first 4000 chars)
