@@ -637,6 +637,17 @@ app.options("*", (req, res) => res.sendStatus(200));
 
 app.get("/", (req, res) => res.json({ status: "ok", message: "Cosmic Reading proxy is running" }));
 
+// Diagnostic endpoint — shows which env vars are present (never exposes values)
+app.get("/health", (req, res) => {
+  const vars = ["STRIPE_SECRET_KEY", "STRIPE_WEBHOOK_SECRET", "ANTHROPIC_API_KEY",
+                 "RESEND_API_KEY", "SHEETS_WEBHOOK_URL"];
+  const result = {};
+  for (const v of vars) {
+    result[v] = process.env[v] ? "SET" : "MISSING";
+  }
+  res.json({ status: "ok", env: result });
+});
+
 // Protected test endpoint — requires Authorization: Bearer <ANTHROPIC_API_KEY>
 app.post("/generate", async (req, res) => {
   const apiKey = process.env.ANTHROPIC_API_KEY;
