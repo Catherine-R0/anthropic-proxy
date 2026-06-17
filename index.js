@@ -247,7 +247,7 @@ function renderReferralCTA(loc) {
 <div class="referral-cta">
   <h3 class="referral-heading">${heading}</h3>
   <p class="referral-body">${body}</p>
-  <a class="referral-button" href="https://cosmicreading.com">[ ${buttonText} ]</a>
+  <a class="referral-button" href="https://cosmic-reading.netlify.app">[ ${buttonText} ]</a>
 </div>`;
 }
 
@@ -755,7 +755,7 @@ async function sendEmail(to, name, htmlContent, lang) {
 app.post("/create-checkout", async (req, res) => {
   try {
     const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
-    const { name, date, lang, email } = req.body;
+    const { name, date, lang, email, marketing_consent } = req.body;
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
       line_items: [{
@@ -771,10 +771,11 @@ app.post("/create-checkout", async (req, res) => {
       cancel_url:  "https://cosmic-reading.netlify.app",
       customer_email: email || undefined,
       metadata: {
-        name:  name  || "",
-        date:  date  || "",
-        lang:  lang  || "en",
-        email: email || "",
+        name:               name               || "",
+        date:               date               || "",
+        lang:               lang               || "en",
+        email:              email              || "",
+        marketing_consent:  marketing_consent  || "",
       },
     });
     res.json({ url: session.url });

@@ -32,6 +32,12 @@ const LOCALIZATION = {
     methodologyNoteTitle: "About This Report",
     methodologyNoteBody: "This report is created for self-reflection, personal analysis, and a deeper understanding of individual patterns. It combines different interpretive layers: Big Five as a behavioral model for describing personality tendencies, DISC as a reference for understanding communication and interaction style, and Matrix of Destiny, numerology, name, date of birth, zodiac sign, and birth year as symbolic systems of self-knowledge.\n\nThese approaches are not used as diagnosis, prediction, or definitive statements about personality. Big Five and DISC help describe possible behavioral and communication tendencies, while symbolic systems add a personal and reflective context. The purpose of this report is to help you notice possible patterns, strengths, inner contradictions, and themes for conscious development.",
 
+    referralCTA: {
+      heading: "Did you like the report?",
+      body: "If you found this report helpful, you can share Cosmic Reading with a loved one. Sometimes, a single personal perspective from the outside can help spark a very important inner conversation.",
+      buttonText: "Share with a friend",
+    },
+
     shortDisclaimerTitle: "A Brief Note",
     shortDisclaimerBody: "This report is created for self-reflection and personal analysis. It is not a psychological diagnosis, prediction, or medical, legal, or financial advice. All insights should be treated as invitations to reflection — not fixed statements about who you are.",
 
@@ -198,6 +204,12 @@ const LOCALIZATION = {
     methodologyNoteTitle: "Selle aruande kohta",
     methodologyNoteBody: "See aruanne on loodud eneserefleksiooniks, isiklikuks analüüsiks ja individuaalsete mustrite sügavamaks mõistmiseks. See ühendab erinevaid tõlgenduskihte: Big Five kui käitumuslik mudel isiksuseomaduste kirjeldamiseks, DISC kui orientiir suhtlemis- ja interaktsioonistiili mõistmiseks ning Matrix of Destiny, numeroloogia, nimi, sünniaeg, sodiaagimärk ja sünniaasta kui sümboolsed enesemõistmise süsteemid.\n\nNeid lähenemisi ei kasutata diagnoosi, ennustuse ega lõpliku isiksusväitena. Big Five ja DISC aitavad kirjeldada võimalikke käitumuslikke ja suhtlemislikke tendentse, samas kui sümboolsed süsteemid lisavad isiklikku ja refleksiivset konteksti. Aruande eesmärk on aidata märgata võimalikke mustreid, tugevusi, sisemisi vastuolusid ja teadliku arengu teemasid.",
 
+    referralCTA: {
+      heading: "Kas aruanne meeldis?",
+      body: "Kui see aruanne oli sulle kasulik, saad jagada Cosmic Readingut lähedase inimesega. Mõnikord aitab üks isiklik väline vaatenurk alustada väga olulist sisemist vestlust.",
+      buttonText: "Jaga sõbraga",
+    },
+
     shortDisclaimerTitle: "Lühike märkus",
     shortDisclaimerBody: "See aruanne on loodud eneserefleksiooniks ja isiklikuks analüüsiks. See ei ole psühholoogiline diagnoos, ennustus ega meditsiiniline, juriidiline ega finantsnõuanne. Kõiki järeldusi tuleks käsitada kutse mõtiskluseks — mitte fikseeritud väidetena isiksuse kohta.",
 
@@ -259,6 +271,12 @@ const LOCALIZATION = {
 
     methodologyNoteTitle: "Tästä raportista",
     methodologyNoteBody: "Tämä raportti on luotu itsereflektioon, henkilökohtaiseen analyysiin ja yksilöllisten mallien syvempään ymmärtämiseen. Se yhdistää erilaisia tulkintakerroksia: Big Five käyttäytymismallina persoonallisuuden taipumusten kuvaamiseen, DISC viitepisteenä viestintä- ja vuorovaikutustyylin ymmärtämiseen sekä Matrix of Destiny, numerologia, nimi, syntymäaika, horoskooppimerkki ja syntymävuosi symbolisina itsetuntemuksen järjestelminä.\n\nNäitä lähestymistapoja ei käytetä diagnoosina, ennustuksena tai lopullisina persoonallisuusväittäminä. Big Five ja DISC auttavat kuvaamaan mahdollisia käyttäytymis- ja viestintätendenssiä, kun taas symboliset järjestelmät lisäävät henkilökohtaista ja reflektiivistä kontekstia. Raportin tarkoituksena on auttaa sinua huomaamaan mahdollisia malleja, vahvuuksia, sisäisiä ristiriitoja ja tietoisen kehityksen teemoja.",
+
+    referralCTA: {
+      heading: "Piditkö raportista?",
+      body: "Jos raportti oli sinulle hyödyllinen, voit jakaa Cosmic Readingin läheisellesi. Joskus yksi henkilökohtainen ulkopuolinen näkökulma voi auttaa käynnistämään hyvin tärkeän sisäisen keskustelun.",
+      buttonText: "Jaa ystävälle",
+    },
 
     shortDisclaimerTitle: "Lyhyt huomio",
     shortDisclaimerBody: "Tämä raportti on luotu itsereflektioon ja henkilökohtaiseen analyysiin. Se ei ole psykologinen diagnoosi, ennustus eikä lääketieteellinen, oikeudellinen tai taloudellinen neuvonta. Kaikkia päätelmiä tulisi pitää kutsuna pohdintaan — ei kiinteinä väittäminä siitä, kuka olet.",
@@ -322,6 +340,12 @@ const LOCALIZATION = {
     methodologyNoteTitle: "Par šo ziņojumu",
     methodologyNoteBody: "Šis ziņojums ir izveidots pašrefleksijai, personiskajai analīzei un individuālo modeļu dziļākai izpratnei. Tas apvieno dažādus interpretācijas slāņus: Big Five kā uzvedības modeli personības tendenču aprakstīšanai, DISC kā orientieri komunikācijas un mijiedarbības stila izpratnei, kā arī Matrix of Destiny, numeroloģiju, vārdu, dzimšanas datumu, zodiaka zīmi un dzimšanas gadu kā simboliskas pašizziņas sistēmas.\n\nŠīs pieejas netiek izmantotas kā diagnoze, prognoze vai galīgs apgalvojums par personību. Big Five un DISC palīdz aprakstīt iespējamās uzvedības un komunikācijas tendences, savukārt simboliskās sistēmas pievieno personīgu un reflektīvu kontekstu. Ziņojuma mērķis ir palīdzēt pamanīt iespējamos modeļus, stiprās puses, iekšējos pretrunus un apzinātas attīstības tēmas.",
 
+    referralCTA: {
+      heading: "Vai atskaite patika?",
+      body: "Ja šī atskaite tev bija noderīga, vari dalīties ar Cosmic Reading kādam tuvam cilvēkam. Dažreiz viens personīgs skats no malas palīdz aizsākt ļoti svarīgu iekšējo sarunu.",
+      buttonText: "Dalīties ar draugu",
+    },
+
     shortDisclaimerTitle: "Īsa piezīme",
     shortDisclaimerBody: "Šis ziņojums ir izveidots pašrefleksijai un personiskajai analīzei. Tas nav psiholoģiska diagnoze, prognoze vai medicīnisks, juridisks vai finansiāls padoms. Visi secinājumi jāuztver kā uzaicinājums pārdomāt — nevis kā fiksēti apgalvojumi par to, kas tu esi.",
 
@@ -383,6 +407,12 @@ const LOCALIZATION = {
 
     methodologyNoteTitle: "Apie šią ataskaitą",
     methodologyNoteBody: "Ši ataskaita skirta savirefleksijai, asmeninei analizei ir gilesniam individualiems modeliams suprasti. Ji sujungia skirtingus interpretacijos sluoksnius: Big Five kaip elgesio modelį asmenybės tendencijoms apibūdinti, DISC kaip orientyrą komunikacijos ir sąveikos stiliui suprasti, o Matrix of Destiny, numerologiją, vardą, gimimo datą, zodiako ženklą ir gimimo metus — kaip simbolines savipažinimo sistemas.\n\nŠie metodai nenaudojami kaip diagnozė, prognozė ar galutinis teiginys apie asmenybę. Big Five ir DISC padeda apibūdinti galimas elgesio ir komunikacijos tendencijas, o simbolinės sistemos prideda asmeninį ir reflektyvų kontekstą. Ataskaitos tikslas — padėti pastebėti galimus modelius, stiprybes, vidinius prieštaravimus ir sąmoningo tobulėjimo temas.",
+
+    referralCTA: {
+      heading: "Ar patiko ataskaita?",
+      body: "Jei ši ataskaita buvo naudinga, galite pasidalinti Cosmic Reading su artimu žmogumi. Kartais vienas asmeninis žvilgsnis iš šalies padeda pradėti labai svarbų vidinį pokalbį.",
+      buttonText: "Pasidalinti su draugu",
+    },
 
     shortDisclaimerTitle: "Trumpa pastaba",
     shortDisclaimerBody: "Ši ataskaita skirta savirefleksijai ir asmeninei analizei. Ji nėra psichologinė diagnozė, prognozė ar medicininė, teisinė ar finansinė konsultacija. Visas išvadas reikėtų vertinti kaip kvietimą apmąstyti — ne kaip fiksuotus teiginius apie tai, kas esate.",
