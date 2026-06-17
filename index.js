@@ -780,12 +780,12 @@ app.post("/create-checkout", async (req, res) => {
         price_data: {
           currency: "eur",
           product_data: { name: "Cosmic Reading — Full Personal Portrait" },
-          unit_amount: 900,
+          unit_amount: 100,
         },
         quantity: 1,
       }],
       mode: "payment",
-      success_url: "https://cosmic-reading.netlify.app?success=true",
+      success_url: "https://cosmic-reading.netlify.app/thank-you",
       cancel_url:  "https://cosmic-reading.netlify.app",
       customer_email: email || undefined,
       metadata: {
