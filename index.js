@@ -751,6 +751,24 @@ async function sendEmail(to, name, htmlContent, lang) {
   return response.json();
 }
 
+// ─── Google Sheets order logging ─────────────────────────────────────────────
+async function logOrderToSheets(orderData) {
+  const url = process.env.SHEETS_WEBHOOK_URL;
+  if (!url) return;
+  try {
+    const r = await fetch(url, {
+      method:  "POST",
+      headers: { "Content-Type": "application/json" },
+      body:    JSON.stringify(orderData),
+    });
+    const json = await r.json();
+    if (!json.ok) console.error("Sheets log returned error:", json.error);
+    else console.log("Order logged to Sheets:", orderData.stripe_session_id);
+  } catch (err) {
+    console.error("Sheets logging failed (non-critical):", err.message);
+  }
+}
+
 // ─── Stripe checkout ──────────────────────────────────────────────────────────
 app.post("/create-checkout", async (req, res) => {
   try {
@@ -827,6 +845,19 @@ app.post("/webhook", async (req, res) => {
     console.error("Webhook: no date in metadata for session", session.id);
     return;
   }
+
+  // Log order to Google Sheets (fire-and-forget — never blocks report delivery)
+  logOrderToSheets({
+    timestamp:         new Date().toISOString(),
+    name,
+    date,
+    lang,
+    email,
+    marketing_consent: meta.marketing_consent || "",
+    stripe_session_id: session.id,
+    amount_eur:        (session.amount_total / 100).toFixed(2),
+    status:            "paid",
+  });
 
   console.log(`Generating report for: ${name}, ${date}, ${lang} → ${email}`);
   try {
