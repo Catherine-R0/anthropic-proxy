@@ -627,13 +627,26 @@ Asmeninis, šiltas tonas. ~120 žodžių kiekvienam skyriui (integruotas portret
 app.use("/webhook", express.raw({ type: "application/json" }));
 app.use(express.json());
 
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
-  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
-  next();
-});
-app.options("*", (req, res) => res.sendStatus(200));
+const ALLOWED_ORIGINS = (process.env.ALLOWED_ORIGINS || "")
+  .split(",").map(s => s.trim()).filter(Boolean);
+
+function setCors(req, res) {
+  const origin = req.headers.origin;
+  if (!origin) return; // server-to-server (Stripe webhook) — no CORS headers needed
+  const isDev = process.env.NODE_ENV !== "production";
+  const allowed =
+    ALLOWED_ORIGINS.includes(origin) ||
+    (isDev && /^https?:\/\/localhost(:\d+)?$/.test(origin));
+  if (allowed) {
+    res.header("Access-Control-Allow-Origin", origin);
+    res.header("Vary", "Origin");
+    res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+    res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  }
+}
+
+app.use((req, res, next) => { setCors(req, res); next(); });
+app.options("*", (req, res) => { setCors(req, res); res.sendStatus(200); });
 
 app.get("/", (req, res) => res.json({ status: "ok", message: "Cosmic Reading proxy is running" }));
 
@@ -753,30 +766,38 @@ async function sendEmail(to, name, htmlContent, lang) {
     method: "POST",
     headers: { "Content-Type": "application/json", Authorization: `Bearer ${resendKey}` },
     body: JSON.stringify({
-      from: "Cosmic Reading <onboarding@resend.dev>",
+      from: "Cosmic Reading <hello@cosmicreading.app>",
+      reply_to: "cosmicreading.support@gmail.com",
       to: [to],
       subject: subjects[lang] || subjects["en"],
       html: emailHtml,
     }),
   });
-  return response.json();
+  const result = await response.json();
+  if (!response.ok) throw new Error(`Resend ${response.status}: ${JSON.stringify(result)}`);
+  return result;
 }
 
 // ─── Google Sheets order logging ─────────────────────────────────────────────
-async function logOrderToSheets(orderData) {
+async function sheetsLog(action, data) {
   const url = process.env.SHEETS_WEBHOOK_URL;
-  if (!url) return;
+  if (!url) {
+    console.warn(`[Sheets] SHEETS_WEBHOOK_URL not set — skipping [${action}] for session ${data.stripe_session_id} customer ${data.customer_email || ""}`);
+    return null;
+  }
   try {
     const r = await fetch(url, {
       method:  "POST",
       headers: { "Content-Type": "application/json" },
-      body:    JSON.stringify(orderData),
+      body:    JSON.stringify({ action, ...data }),
     });
     const json = await r.json();
-    if (!json.ok) console.error("Sheets log returned error:", json.error);
-    else console.log("Order logged to Sheets:", orderData.stripe_session_id);
+    if (!json.ok) console.error(`[Sheets] [${action}] error for session ${data.stripe_session_id}:`, json.error);
+    else          console.log(`[Sheets] [${action}] ok — session ${data.stripe_session_id}`);
+    return json;
   } catch (err) {
-    console.error("Sheets logging failed (non-critical):", err.message);
+    console.error(`[Sheets] [${action}] unreachable for session ${data.stripe_session_id} customer ${data.customer_email || ""}:`, err.message);
+    return null;
   }
 }
 
@@ -816,28 +837,31 @@ app.post("/create-checkout", async (req, res) => {
 
 // ─── Stripe webhook ───────────────────────────────────────────────────────────
 app.post("/webhook", async (req, res) => {
-  // Acknowledge immediately — Stripe requires fast response
-  res.json({ received: true });
-
   let event;
   try {
     const stripeKey = process.env.STRIPE_SECRET_KEY;
     const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
-    if (stripeKey && webhookSecret) {
-      const stripe = require("stripe")(stripeKey);
-      event = stripe.webhooks.constructEvent(
-        req.body,
-        req.headers["stripe-signature"],
-        webhookSecret
-      );
-    } else {
-      // Dev fallback — no signature verification
-      event = JSON.parse(req.body);
+    if (process.env.NODE_ENV === "production") {
+      if (!stripeKey)     throw new Error("STRIPE_SECRET_KEY is not set");
+      if (!webhookSecret) throw new Error("STRIPE_WEBHOOK_SECRET is not set");
     }
+    if (!stripeKey || !webhookSecret) {
+      console.warn("Webhook: missing Stripe keys — skipping unverified request");
+      return res.status(400).json({ error: "Stripe keys not configured" });
+    }
+    const stripe = require("stripe")(stripeKey);
+    event = stripe.webhooks.constructEvent(
+      req.body,
+      req.headers["stripe-signature"],
+      webhookSecret
+    );
   } catch (err) {
     console.error("Webhook signature error:", err.message);
-    return;
+    return res.status(400).json({ error: err.message });
   }
+
+  // Acknowledge after verification — Stripe requires 2xx response
+  res.json({ received: true });
 
   if (event.type !== "checkout.session.completed") return;
 
@@ -857,26 +881,67 @@ app.post("/webhook", async (req, res) => {
     return;
   }
 
-  // Log order to Google Sheets (fire-and-forget — never blocks report delivery)
-  logOrderToSheets({
-    timestamp:         new Date().toISOString(),
-    name,
-    date,
-    lang,
-    email,
-    marketing_consent: meta.marketing_consent || "",
+  const baseRow = {
     stripe_session_id: session.id,
-    amount_eur:        (session.amount_total / 100).toFixed(2),
-    status:            "paid",
-  });
+    payment_intent:    session.payment_intent    || "",
+    customer_email:    email,
+    first_name:        name,
+    date_of_birth:     date,
+    selected_language: lang,
+    product_purchased: "Cosmic Reading — Full Personal Portrait",
+    amount_total:      ((session.amount_total || 0) / 100).toFixed(2),
+    currency:          (session.currency || "eur").toUpperCase(),
+    consent_text:      meta.marketing_consent || "",
+  };
 
-  console.log(`Generating report for: ${name}, ${date}, ${lang} → ${email}`);
+  // Step 1: register order — idempotency guard
+  const upsertResult = await sheetsLog("upsert", {
+    ...baseRow,
+    report_generated:  false,
+    email_sent:        false,
+    email_error:       "",
+    processing_status: "received",
+  });
+  if (upsertResult && upsertResult.created === false) {
+    console.log(`[Webhook] Duplicate event for session ${session.id} — skipping`);
+    return;
+  }
+
+  // Step 2: generate report
+  let htmlContent;
   try {
-    const htmlContent = await generateFullReading(name, date, lang);
-    const emailResult = await sendEmail(email, name, htmlContent, lang);
-    console.log("Email sent:", emailResult);
+    console.log(`[Webhook] Generating report: ${name}, ${date}, ${lang} → ${email}`);
+    htmlContent = await generateFullReading(name, date, lang);
   } catch (err) {
-    console.error("Error generating/sending reading:", err.message);
+    console.error(`[Webhook] Report generation failed for session ${session.id} (${email}):`, err.message);
+    await sheetsLog("update", { stripe_session_id: session.id, customer_email: email, processing_status: "report_error", email_error: err.message });
+    return;
+  }
+
+  // Step 3: save report HTML to Google Drive before attempting delivery
+  const saveResult = await sheetsLog("save_report", {
+    stripe_session_id: session.id,
+    customer_email:    email,
+    first_name:        name,
+    date_of_birth:     date,
+    html:              htmlContent,
+  });
+  if (!saveResult || !saveResult.ok) {
+    const saveErr = saveResult ? saveResult.error : "Sheets/Drive unreachable";
+    console.error(`[Webhook] Drive save failed for session ${session.id} (${email}): ${saveErr}`);
+    await sheetsLog("update", { stripe_session_id: session.id, customer_email: email, processing_status: "report_save_error", email_error: saveErr });
+    return;
+  }
+  console.log(`[Webhook] Report saved to Drive — file ${saveResult.file_id} — session ${session.id}`);
+
+  // Step 4: send email — report is recoverable from Drive if this fails
+  try {
+    await sendEmail(email, name, htmlContent, lang);
+    await sheetsLog("update", { stripe_session_id: session.id, customer_email: email, email_sent: true, email_error: "", processing_status: "completed" });
+    console.log(`[Webhook] Report delivered to ${email} — session ${session.id}`);
+  } catch (err) {
+    console.error(`[Webhook] Email delivery failed for session ${session.id} (${email}):`, err.message);
+    await sheetsLog("update", { stripe_session_id: session.id, customer_email: email, email_sent: false, email_error: err.message, processing_status: "email_error" });
   }
 });
 
