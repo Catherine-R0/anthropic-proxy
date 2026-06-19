@@ -247,7 +247,7 @@ function renderReferralCTA(loc) {
 <div class="referral-cta">
   <h3 class="referral-heading">${heading}</h3>
   <p class="referral-body">${body}</p>
-  <a class="referral-button" href="https://cosmic-reading.netlify.app">[ ${buttonText} ]</a>
+  <a class="referral-button" href="${siteUrl}">[ ${buttonText} ]</a>
 </div>`;
 }
 
@@ -627,6 +627,10 @@ Asmeninis, šiltas tonas. ~120 žodžių kiekvienam skyriui (integruotas portret
 app.use("/webhook", express.raw({ type: "application/json" }));
 app.use(express.json());
 
+const siteUrl = process.env.PUBLIC_SITE_URL
+  || process.env.NETLIFY_SITE_URL
+  || "https://cosmic-reading.netlify.app";
+
 const ALLOWED_ORIGINS = (process.env.ALLOWED_ORIGINS || "")
   .split(",").map(s => s.trim()).filter(Boolean);
 
@@ -759,7 +763,7 @@ async function sendEmail(to, name, htmlContent, lang) {
   <h1>✨ Cosmic Reading</h1>
   <p class="subtitle">${name} · ${lang.toUpperCase()}</p>
   ${htmlContent}
-  <div class="footer"><p>cosmic-reading.netlify.app</p></div>
+  <div class="footer"><p>${siteUrl.replace(/^https?:\/\//, "")}</p></div>
 </div></body></html>`;
 
   const response = await fetch("https://api.resend.com/emails", {
@@ -817,8 +821,8 @@ app.post("/create-checkout", async (req, res) => {
         quantity: 1,
       }],
       mode: "payment",
-      success_url: "https://cosmic-reading.netlify.app/thank-you",
-      cancel_url:  "https://cosmic-reading.netlify.app",
+      success_url: `${siteUrl}/thank-you`,
+      cancel_url:  siteUrl,
       customer_email: email || undefined,
       metadata: {
         name:               name               || "",
