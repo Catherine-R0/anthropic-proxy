@@ -665,6 +665,19 @@ app.get("/health", (req, res) => {
   res.json({ status: "ok", env: result });
 });
 
+// Temporary diagnostic — confirms which Stripe account Railway is connected to
+app.get("/stripe-account", async (req, res) => {
+  const key = process.env.STRIPE_SECRET_KEY;
+  if (!key) return res.status(500).json({ error: "STRIPE_SECRET_KEY not set" });
+  try {
+    const stripe  = require("stripe")(key);
+    const account = await stripe.accounts.retrieve();
+    res.json({ account_id: account.id, livemode: !key.startsWith("sk_test_") });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 // Protected test endpoint — requires Authorization: Bearer <ANTHROPIC_API_KEY>
 app.post("/generate", async (req, res) => {
   const apiKey = process.env.ANTHROPIC_API_KEY;
