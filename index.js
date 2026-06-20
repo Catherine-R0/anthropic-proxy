@@ -276,10 +276,8 @@ function renderReferralCTA(loc) {
 <style>
 .referral-cta{margin-top:48px;padding:28px 24px;background:#0f0f22;border-radius:12px;border:1px solid #2a2a5a;text-align:center}
 .referral-heading{color:#8a7ab5;font-size:15px;margin:0 0 10px;font-weight:normal}
-.referral-body{color:#6a5a8a;font-size:13px;line-height:1.7;margin:0 0 20px}
-.referral-button{display:inline-block;background:transparent;color:#c4a8ff;border:1px solid #4a3a7a;border-radius:8px;padding:11px 26px;font-size:13px;letter-spacing:0.07em;cursor:pointer;text-decoration:none;font-family:Georgia,serif;transition:border-color 0.18s,background 0.18s}
-.referral-button:hover{background:#1e1a3a;border-color:#c4a8ff}
-.cr-share-panel{display:none;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:16px}
+.referral-body{color:#6a5a8a;font-size:13px;line-height:1.7;margin:0 0 18px}
+.cr-share-row{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
 .cr-share-opt{display:inline-block;background:#1a1a3a;color:#c4a8ff;border:1px solid #2a2a5a;border-radius:6px;padding:8px 14px;font-size:12px;letter-spacing:0.04em;text-decoration:none;cursor:pointer;font-family:Georgia,serif;transition:background 0.15s,border-color 0.15s;-webkit-appearance:none;appearance:none}
 .cr-share-opt:hover{background:#222245;border-color:#4a3a7a;color:#e0d5f5}
 .cr-copy-confirm{font-size:12px;color:#7de8d0;margin-top:10px;display:none}
@@ -287,31 +285,18 @@ function renderReferralCTA(loc) {
 <div class="referral-cta">
   <h3 class="referral-heading">${heading}</h3>
   <p class="referral-body">${body}</p>
-  <a href="${shareUrl}" class="referral-button" onclick="crShare(event)" rel="noopener">${buttonText}</a>
-  <div class="cr-share-panel" id="cr-share-panel">
+  <div class="cr-share-row">
     <a class="cr-share-opt" href="https://wa.me/?text=${encWaText}" target="_blank" rel="noopener">WhatsApp</a>
     <a class="cr-share-opt" href="https://t.me/share/url?url=${encUrl}&text=${encTgText}" target="_blank" rel="noopener">Telegram</a>
     <a class="cr-share-opt" href="https://www.facebook.com/sharer/sharer.php?u=${encUrl}" target="_blank" rel="noopener">Facebook</a>
     <a class="cr-share-opt" href="mailto:?subject=${encEmailSubj}&body=${encEmailBody}">Email</a>
-    <button class="cr-share-opt" id="cr-copy-btn" onclick="crCopy(event)">${copyLink}</button>
+    <a class="cr-share-opt" href="${shareUrl}" id="cr-copy-btn" onclick="crCopy(event)" rel="noopener">${copyLink}</a>
   </div>
   <p class="cr-copy-confirm" id="cr-copy-confirm"></p>
 </div>
 <script>
 (function(){
-  var U=${jsUrl},T=${jsTitle},X=${jsText},C=${jsCopied},L=${jsCopyLink};
-  window.crShare=function(e){
-    e.preventDefault();
-    if(navigator.share){
-      navigator.share({title:T,text:X,url:U}).catch(function(err){
-        if(err.name!=='AbortError')crPanel();
-      });
-    }else{crPanel();}
-  };
-  function crPanel(){
-    var p=document.getElementById('cr-share-panel');
-    if(p)p.style.display='flex';
-  }
+  var U=${jsUrl},C=${jsCopied},L=${jsCopyLink};
   window.crCopy=function(e){
     e.preventDefault();
     function done(){
