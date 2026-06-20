@@ -12,13 +12,17 @@ const { validateReport }                              = require("./src/validator
 let kbRecords = [];
 try {
   const XLSX   = require("xlsx");
-  const kbPath = path.join(__dirname, "..", "Knowledge_Base",
-                           "Knowledge_Base_v2_6_1_AI_Report_Generation.xlsx");
+  const kbPath = process.env.KB_PATH
+    || path.join(__dirname, "Knowledge_Base", "Knowledge_Base_v2_6_1_AI_Report_Generation.xlsx");
   const wb     = XLSX.readFile(kbPath);
   kbRecords    = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]]);
   console.log(`Behavioral context loaded: ${kbRecords.length} records`);
 } catch (err) {
-  console.log("Behavioral context not available:", err.message);
+  if (process.env.NODE_ENV === "production") {
+    console.error("FATAL: Knowledge Base could not be loaded:", err.message);
+    process.exit(1);
+  }
+  console.warn("Behavioral context not available (dev):", err.message);
 }
 
 const isPlaceholder = (s) =>
@@ -662,6 +666,7 @@ app.get("/health", (req, res) => {
   for (const v of vars) {
     result[v] = process.env[v] ? "SET" : "MISSING";
   }
+  result.KB_RECORDS = kbRecords.length > 0 ? `${kbRecords.length} records` : "EMPTY — check KB_PATH";
   res.json({ status: "ok", env: result });
 });
 
