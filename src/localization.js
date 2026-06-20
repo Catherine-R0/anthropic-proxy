@@ -35,7 +35,11 @@ const LOCALIZATION = {
     referralCTA: {
       heading: "Did you like the report?",
       body: "If you found this report helpful, you can share Cosmic Reading with a loved one. Sometimes, a single personal perspective from the outside can help spark a very important inner conversation.",
-      buttonText: "Share with a friend",
+      buttonText: "Tell a friend",
+      shareTitle: "Cosmic Reading",
+      shareText: "I found this personal self-discovery report interesting — maybe you'll like it too.",
+      copyLink: "Copy link",
+      copied: "Copied!",
     },
 
     shortDisclaimerTitle: "A Brief Note",
@@ -122,6 +126,10 @@ const LOCALIZATION = {
       heading: "Понравился отчёт?",
       body: "Если этот отчёт оказался для вас полезным, вы можете поделиться Cosmic Reading с близким человеком. Иногда один персональный взгляд со стороны помогает начать очень важный внутренний разговор.",
       buttonText: "Рассказать другу",
+      shareTitle: "Cosmic Reading",
+      shareText: "Мне понравился этот персональный отчёт для самопонимания — возможно, тебе тоже будет интересно.",
+      copyLink: "Скопировать ссылку",
+      copied: "Скопировано!",
     },
 
     shortDisclaimerTitle: "Короткое примечание",
@@ -208,6 +216,10 @@ const LOCALIZATION = {
       heading: "Kas aruanne meeldis?",
       body: "Kui see aruanne oli sulle kasulik, saad jagada Cosmic Readingut lähedase inimesega. Mõnikord aitab üks isiklik väline vaatenurk alustada väga olulist sisemist vestlust.",
       buttonText: "Jaga sõbraga",
+      shareTitle: "Cosmic Reading",
+      shareText: "Mulle meeldis see personaalne enesemõistmise raport — võib-olla pakub see ka sulle huvi.",
+      copyLink: "Kopeeri link",
+      copied: "Kopeeritud!",
     },
 
     shortDisclaimerTitle: "Lühike märkus",
@@ -276,6 +288,10 @@ const LOCALIZATION = {
       heading: "Piditkö raportista?",
       body: "Jos raportti oli sinulle hyödyllinen, voit jakaa Cosmic Readingin läheisellesi. Joskus yksi henkilökohtainen ulkopuolinen näkökulma voi auttaa käynnistämään hyvin tärkeän sisäisen keskustelun.",
       buttonText: "Jaa ystävälle",
+      shareTitle: "Cosmic Reading",
+      shareText: "Pidin tästä henkilökohtaisesta itsetuntemusraportista — ehkä se kiinnostaa sinuakin.",
+      copyLink: "Kopioi linkki",
+      copied: "Kopioitu!",
     },
 
     shortDisclaimerTitle: "Lyhyt huomio",
@@ -343,7 +359,11 @@ const LOCALIZATION = {
     referralCTA: {
       heading: "Vai atskaite patika?",
       body: "Ja šī atskaite tev bija noderīga, vari dalīties ar Cosmic Reading kādam tuvam cilvēkam. Dažreiz viens personīgs skats no malas palīdz aizsākt ļoti svarīgu iekšējo sarunu.",
-      buttonText: "Dalīties ar draugu",
+      buttonText: "Pastāsti draugam",
+      shareTitle: "Cosmic Reading",
+      shareText: "Man patika šis personīgais pašizziņas pārskats — varbūt tas būs interesants arī tev.",
+      copyLink: "Kopēt saiti",
+      copied: "Nokopēts!",
     },
 
     shortDisclaimerTitle: "Īsa piezīme",
@@ -412,6 +432,10 @@ const LOCALIZATION = {
       heading: "Ar patiko ataskaita?",
       body: "Jei ši ataskaita buvo naudinga, galite pasidalinti Cosmic Reading su artimu žmogumi. Kartais vienas asmeninis žvilgsnis iš šalies padeda pradėti labai svarbų vidinį pokalbį.",
       buttonText: "Pasidalinti su draugu",
+      shareTitle: "Cosmic Reading",
+      shareText: "Man patiko ši asmeninė savęs pažinimo ataskaita — galbūt ji sudomins ir tave.",
+      copyLink: "Kopijuoti nuorodą",
+      copied: "Nukopijuota!",
     },
 
     shortDisclaimerTitle: "Trumpa pastaba",

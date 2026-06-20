@@ -244,15 +244,98 @@ function renderDisclaimerSection(loc) {
 </div>`;
 }
 
+const REFERRAL_SHARE_URL = "https://cosmic-reading.netlify.app/?utm_source=report_share&utm_medium=referral&utm_campaign=friend_share";
+
 function renderReferralCTA(loc) {
   if (!loc.referralCTA) return "";
-  const { heading, body, buttonText } = loc.referralCTA;
+  const {
+    heading    = "",
+    body       = "",
+    buttonText = "",
+    shareTitle = "Cosmic Reading",
+    shareText  = "",
+    copyLink   = "Copy link",
+    copied     = "Copied!",
+  } = loc.referralCTA;
+
+  const shareUrl = REFERRAL_SHARE_URL;
+
+  const encUrl       = encodeURIComponent(shareUrl);
+  const encWaText    = encodeURIComponent(shareText + "\n" + shareUrl);
+  const encTgText    = encodeURIComponent(shareText);
+  const encEmailSubj = encodeURIComponent(shareTitle);
+  const encEmailBody = encodeURIComponent(shareText + "\n\n" + shareUrl);
+
+  const jsUrl      = JSON.stringify(shareUrl);
+  const jsTitle    = JSON.stringify(shareTitle);
+  const jsText     = JSON.stringify(shareText);
+  const jsCopied   = JSON.stringify(copied);
+  const jsCopyLink = JSON.stringify(copyLink);
+
   return `
+<style>
+.referral-cta{margin-top:48px;padding:28px 24px;background:#0f0f22;border-radius:12px;border:1px solid #2a2a5a;text-align:center}
+.referral-heading{color:#8a7ab5;font-size:15px;margin:0 0 10px;font-weight:normal}
+.referral-body{color:#6a5a8a;font-size:13px;line-height:1.7;margin:0 0 20px}
+.referral-button{display:inline-block;background:transparent;color:#c4a8ff;border:1px solid #4a3a7a;border-radius:8px;padding:11px 26px;font-size:13px;letter-spacing:0.07em;cursor:pointer;text-decoration:none;font-family:Georgia,serif;transition:border-color 0.18s,background 0.18s}
+.referral-button:hover{background:#1e1a3a;border-color:#c4a8ff}
+.cr-share-panel{display:none;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:16px}
+.cr-share-opt{display:inline-block;background:#1a1a3a;color:#c4a8ff;border:1px solid #2a2a5a;border-radius:6px;padding:8px 14px;font-size:12px;letter-spacing:0.04em;text-decoration:none;cursor:pointer;font-family:Georgia,serif;transition:background 0.15s,border-color 0.15s;-webkit-appearance:none;appearance:none}
+.cr-share-opt:hover{background:#222245;border-color:#4a3a7a;color:#e0d5f5}
+.cr-copy-confirm{font-size:12px;color:#7de8d0;margin-top:10px;display:none}
+</style>
 <div class="referral-cta">
   <h3 class="referral-heading">${heading}</h3>
   <p class="referral-body">${body}</p>
-  <a class="referral-button" href="${siteUrl}">[ ${buttonText} ]</a>
-</div>`;
+  <a href="${shareUrl}" class="referral-button" onclick="crShare(event)" rel="noopener">${buttonText}</a>
+  <div class="cr-share-panel" id="cr-share-panel">
+    <a class="cr-share-opt" href="https://wa.me/?text=${encWaText}" target="_blank" rel="noopener">WhatsApp</a>
+    <a class="cr-share-opt" href="https://t.me/share/url?url=${encUrl}&text=${encTgText}" target="_blank" rel="noopener">Telegram</a>
+    <a class="cr-share-opt" href="https://www.facebook.com/sharer/sharer.php?u=${encUrl}" target="_blank" rel="noopener">Facebook</a>
+    <a class="cr-share-opt" href="mailto:?subject=${encEmailSubj}&body=${encEmailBody}">Email</a>
+    <button class="cr-share-opt" id="cr-copy-btn" onclick="crCopy(event)">${copyLink}</button>
+  </div>
+  <p class="cr-copy-confirm" id="cr-copy-confirm"></p>
+</div>
+<script>
+(function(){
+  var U=${jsUrl},T=${jsTitle},X=${jsText},C=${jsCopied},L=${jsCopyLink};
+  window.crShare=function(e){
+    e.preventDefault();
+    if(navigator.share){
+      navigator.share({title:T,text:X,url:U}).catch(function(err){
+        if(err.name!=='AbortError')crPanel();
+      });
+    }else{crPanel();}
+  };
+  function crPanel(){
+    var p=document.getElementById('cr-share-panel');
+    if(p)p.style.display='flex';
+  }
+  window.crCopy=function(e){
+    e.preventDefault();
+    function done(){
+      var btn=document.getElementById('cr-copy-btn');
+      var msg=document.getElementById('cr-copy-confirm');
+      if(btn)btn.textContent=C;
+      if(msg){msg.textContent=C;msg.style.display='block';}
+      setTimeout(function(){
+        if(btn)btn.textContent=L;
+        if(msg)msg.style.display='none';
+      },2000);
+    }
+    if(navigator.clipboard){
+      navigator.clipboard.writeText(U).then(done).catch(done);
+    }else{
+      var ta=document.createElement('textarea');
+      ta.value=U;ta.style.cssText='position:fixed;opacity:0';
+      document.body.appendChild(ta);ta.focus();ta.select();
+      try{document.execCommand('copy');}catch(x){}
+      document.body.removeChild(ta);done();
+    }
+  };
+})();
+</script>`;
 }
 
 // ─── Life Path names ─────────────────────────────────────────────────────────
