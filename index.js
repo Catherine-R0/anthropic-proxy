@@ -838,11 +838,11 @@ app.post("/create-checkout", async (req, res) => {
       cancel_url:  siteUrl,
       customer_email: email || undefined,
       metadata: {
-        name:               name               || "",
-        date:               date               || "",
-        lang:               lang               || "en",
-        email:              email              || "",
-        marketing_consent:  marketing_consent  || "",
+        first_name:        name              || "",
+        date_of_birth:     date              || "",
+        selected_language: lang              || "en",
+        email:             email             || "",
+        consent_text:      marketing_consent || "",
       },
     });
     res.json({ url: session.url });
@@ -883,18 +883,20 @@ app.post("/webhook", async (req, res) => {
   if (event.type !== "checkout.session.completed") return;
 
   const session = event.data.object;
-  const meta = session.metadata || {};
-  const name  = meta.name  || "Friend";
-  const date  = meta.date  || "";
-  const lang  = meta.lang  || "en";
+  const meta    = session.metadata || {};
+  console.log(`[Webhook] Metadata keys for session ${session.id}: ${Object.keys(meta).join(", ")}`);
+
+  const name  = meta.first_name        || "Friend";
+  const date  = meta.date_of_birth     || "";
+  const lang  = meta.selected_language || "en";
   const email = meta.email || session.customer_email || session.customer_details?.email;
 
   if (!email) {
-    console.error("Webhook: no email found in session", session.id);
+    console.error(`[Webhook] Missing email in session ${session.id} — metadata keys: ${Object.keys(meta).join(", ")}`);
     return;
   }
   if (!date) {
-    console.error("Webhook: no date in metadata for session", session.id);
+    console.error(`[Webhook] Missing date_of_birth in session ${session.id} — metadata keys: ${Object.keys(meta).join(", ")}`);
     return;
   }
 
@@ -908,7 +910,7 @@ app.post("/webhook", async (req, res) => {
     product_purchased: "Cosmic Reading — Full Personal Portrait",
     amount_total:      ((session.amount_total || 0) / 100).toFixed(2),
     currency:          (session.currency || "eur").toUpperCase(),
-    consent_text:      meta.marketing_consent || "",
+    consent_text:      meta.consent_text || "",
   };
 
   // Step 1: register order — idempotency guard
